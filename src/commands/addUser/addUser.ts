@@ -15,7 +15,7 @@ async function command(msg: Message, args: string[]) {
 
     var player = await scoresaber(parsedUrl)
     
-    if (player.playerInfo.playerName.includes('NO ')) {
+    if (player.playerInfo.playerName.includes('NO')) {
         addUserToDatabase(msg, parsedUrl)
     } else {
         msg.reply('You do not have `NO` in your name ')
