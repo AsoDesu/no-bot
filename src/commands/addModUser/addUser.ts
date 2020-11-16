@@ -5,6 +5,7 @@ import scoresaber from '../../scoresaberApiGrabber'
 async function command(msg: Message, args: string[]) {
     if (!msg.member.hasPermission('MANAGE_ROLES')) {
         msg.reply('You dont have permission to do that <:kekchamp:777532686394720276>')
+        return;
     }
     if (!args[1] || !msg.mentions.members.first()) {
         msg.reply('Usage: `>adduser {user} {scoresaber link}`');
