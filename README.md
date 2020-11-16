@@ -20,3 +20,4 @@ No
 - add {scoresaber} - Adds a user to the Member role and to the database
 - user {user} - Gets a given users scoresaber
 - remove - Removes yourself from the Member role and database
+- help - Shows help menu

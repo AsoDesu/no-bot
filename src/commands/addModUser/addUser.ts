@@ -1,13 +1,17 @@
 import { Message } from 'discord.js'
-import scoresaber from '../../scoresaberApiGrabber'
 import addUserToDatabase from './addMemberToDatabase'
+import scoresaber from '../../scoresaberApiGrabber'
 
 async function command(msg: Message, args: string[]) {
-    if (!args[0]) {
-        msg.reply('Usage: `>add {scoresaber link here}`');
+    if (!msg.member.hasPermission('MANAGE_ROLES')) {
+        msg.reply('You dont have permission to do that <:kekchamp:777532686394720276>')
+    }
+    if (!args[1] || !msg.mentions.members.first()) {
+        msg.reply('Usage: `>adduser {user} {scoresaber link}`');
         return;
     }
-    var parsedUrl = parseScoreSaberLink(args[0])
+
+    var parsedUrl = parseScoreSaberLink(args[1])
     if (!parsedUrl) {
         msg.reply('Player Not Found');
         return;
@@ -18,11 +22,11 @@ async function command(msg: Message, args: string[]) {
         msg.reply('That uiser does not exist')
         return;
     }
-    
-    if (player.playerInfo.playerName.includes('NO')) {
-        addUserToDatabase(msg, parsedUrl)
+
+    if (player) {
+        addUserToDatabase(msg, parseScoreSaberLink(args[1]))
     } else {
-        msg.reply('You do not have `NO` in your name ')
+        msg.reply("Thats not a scoresaber link <:sadge:777529901313818716>")
     }
 }
 

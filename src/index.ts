@@ -6,9 +6,12 @@ import addUser from './commands/addUser/addUser'
 import removeUser from './commands/removeUser/removeUser'
 import getUser from './commands/getUser/getUser'
 import help from './commands/help/help'
+import addModUser from './commands/addModUser/addUser'
+import YEP from './YEP'
 import test from './commands/test'
 
 client.on('message', async (msg: Discord.Message) => {
+    if (msg.content.includes('YEP')) { YEP(msg) }
     if (!msg.content.startsWith(process.env.PREFIX) || msg.author.bot) return;
     if (!msg.guild) { msg.reply('You are not in a server'); return };
 
@@ -18,7 +21,7 @@ client.on('message', async (msg: Discord.Message) => {
     switch (command) {
         case 'help':
             help(msg, args)
-            break;
+            return;
         case 'add':
             addUser(msg, args)
             return;
@@ -27,6 +30,9 @@ client.on('message', async (msg: Discord.Message) => {
             return;
         case 'user':
             getUser(msg, args)
+            return;
+        case 'adduser':
+            addModUser(msg, args)
             return;
     }
 })
