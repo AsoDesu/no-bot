@@ -5,6 +5,7 @@ const client = new Discord.Client()
 import addUser from './commands/addUser/addUser'
 import removeUser from './commands/removeUser/removeUser'
 import getUser from './commands/getUser/getUser'
+import help from './commands/help/help'
 import test from './commands/test'
 
 client.on('message', async (msg: Discord.Message) => {
@@ -15,6 +16,9 @@ client.on('message', async (msg: Discord.Message) => {
     const command = args.shift().toLowerCase()
 
     switch (command) {
+        case 'help':
+            help(msg, args)
+            break;
         case 'add':
             addUser(msg, args)
             return;
