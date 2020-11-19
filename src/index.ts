@@ -5,9 +5,10 @@ const client = new Discord.Client()
 import addUser from './commands/addUser/addUser'
 import removeUser from './commands/removeUser/removeUser'
 import getUser from './commands/getUser/getUser'
-import help from './commands/help/help'
 import addModUser from './commands/addModUser/addUser'
 import YEP from './YEP'
+import QQ from './commands/quick-commands/index'
+//import leaderboard from './commands/leaderboard/leaderboard'
 import test from './commands/test'
 
 client.on('message', async (msg: Discord.Message) => {
@@ -19,9 +20,6 @@ client.on('message', async (msg: Discord.Message) => {
     const command = args.shift().toLowerCase()
 
     switch (command) {
-        case 'help':
-            help(msg, args)
-            return;
         case 'add':
             addUser(msg, args)
             return;
@@ -34,7 +32,12 @@ client.on('message', async (msg: Discord.Message) => {
         case 'adduser':
             addModUser(msg, args)
             return;
+        case 'leaderboard':
+            //leaderboard(msg, args)
+            msg.channel.send('Leaderboards are not done yet \n This is why: https://i.imgur.com/nG0M7Mc.png')
+            return;
     }
+    QQ(msg, args, command)
 })
 
 client.on('ready', () => {

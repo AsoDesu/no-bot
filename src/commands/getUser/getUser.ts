@@ -9,6 +9,9 @@ import '../../firebaseinnit'
 var firestore = firebase.firestore()
 
 function command(msg: Message, args: string[]) {
+    if (!msg.mentions.users) {
+        msg.channel.send('You need to specify a user')
+    }
     var userId = msg.mentions.users.first().id
     firestore.collection('users').doc(userId).get().then(doc => {
         if (!doc.exists) {

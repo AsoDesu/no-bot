@@ -1,4 +1,5 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed } from 'discord.js'
+import randColor from '../../../randomColor'
 
 var helpEmbed = new MessageEmbed({
     "title": "No Clan Bot",
@@ -26,9 +27,10 @@ var helpEmbed = new MessageEmbed({
     ]
 })
 
-function command(msg: Message, args: string[]) {
-    helpEmbed.setColor(Math.floor(Math.random() * 16777215))
-    msg.channel.send(helpEmbed)
-}
-
-export default command
+module.exports = {
+    name: "help",
+    execute(msg: Message, args: string[]) {
+        helpEmbed.setColor(randColor())
+        msg.channel.send(helpEmbed)
+    }
+}   
