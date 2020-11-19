@@ -7,7 +7,7 @@ import removeUser from './commands/removeUser/removeUser'
 import getUser from './commands/getUser/getUser'
 import addModUser from './commands/addModUser/addUser'
 import YEP from './YEP'
-import QQ from './commands/quick-commands/index'
+import HELP from './commands/help/help'
 //import leaderboard from './commands/leaderboard/leaderboard'
 import test from './commands/test'
 
@@ -20,6 +20,9 @@ client.on('message', async (msg: Discord.Message) => {
     const command = args.shift().toLowerCase()
 
     switch (command) {
+        case 'help':
+            HELP(msg, args)
+            return;
         case 'add':
             addUser(msg, args)
             return;
@@ -37,7 +40,6 @@ client.on('message', async (msg: Discord.Message) => {
             msg.channel.send('Leaderboards are not done yet \n This is why: https://i.imgur.com/nG0M7Mc.png')
             return;
     }
-    QQ(msg, args, command)
 })
 
 client.on('ready', () => {
