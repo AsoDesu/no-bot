@@ -8,7 +8,7 @@ type command = {
 }
 
 var commands = new Collection()
-const commandFiles = fs.readdirSync(__dirname + '\\commands\\', { encoding: "utf-8" }).filter(file => file.endsWith(".ts"))
+const commandFiles = fs.readdirSync(__dirname + '/commands/', { encoding: "utf-8" }).filter(file => file.endsWith(".ts"))
 
 for (const file of commandFiles) {
     const commandFile = require(`./commands/${file}`)
