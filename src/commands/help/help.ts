@@ -16,12 +16,12 @@ var helpEmbed = new MessageEmbed({
             "value": "Get scoresaber link of a user",
         },
         {
-            "name": ">remove",
-            "value": "Removes yourself from the clan :(",
-        },
-        {
             "name": ">help",
             "value": "Shows this menu",
+        },
+        {
+            "name": ">leaderboard",
+            "value": "Show's a leaderboard of all members of the NOPE clan (Global limit of )"
         }
     ]
 })

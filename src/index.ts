@@ -8,8 +8,8 @@ import getUser from './commands/getUser/getUser'
 import addModUser from './commands/addModUser/addUser'
 import YEP from './YEP'
 import HELP from './commands/help/help'
-//import leaderboard from './commands/leaderboard/leaderboard'
-import test from './commands/test'
+import leaderboard from './commands/leaderboard/leaderboard'
+import dev from './commands/dev/dev'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.content.includes('YEP')) { YEP(msg) }
@@ -36,8 +36,10 @@ client.on('message', async (msg: Discord.Message) => {
             addModUser(msg, args)
             return;
         case 'leaderboard':
-            //leaderboard(msg, args)
-            msg.channel.send('Leaderboards are not done yet \n This is why: https://i.imgur.com/nG0M7Mc.png')
+            leaderboard(msg, args)
+            return;
+        case 'dev':
+            dev(msg, args)
             return;
     }
 })
