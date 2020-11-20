@@ -17,8 +17,8 @@ client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
 
     // memes
-    if (msg.content.includes('YEP')) { YEP(msg) }
-    if (msg.content.includes('<@!777284907302912000>')) { BOT(msg) }
+    if (msg.content.toUpperCase().includes('YEP')) { YEP(msg) }
+    if (msg.content.includes('777284907302912000')) { BOT(msg) }
 
     if (!msg.content.startsWith(process.env.PREFIX) || !msg.guild) return;
 
