@@ -21,7 +21,7 @@ var helpEmbed = new MessageEmbed({
         },
         {
             "name": ">leaderboard",
-            "value": "Show's a leaderboard of all members of the NOPE clan (Global limit of )"
+            "value": "Show's a leaderboard of all members of the NOPE clan (Global limit of 2 minutes)"
         }
     ]
 })
