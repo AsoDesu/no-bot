@@ -6,15 +6,21 @@ import addUser from './commands/addUser/addUser'
 import removeUser from './commands/removeUser/removeUser'
 import getUser from './commands/getUser/getUser'
 import addModUser from './commands/addModUser/addUser'
-import YEP from './YEP'
 import HELP from './commands/help/help'
 import leaderboard from './commands/leaderboard/leaderboard'
 import dev from './commands/dev/dev'
 
+import YEP from './YEP'
+import BOT from './@bot'
+
 client.on('message', async (msg: Discord.Message) => {
+    if (msg.author.bot) return
+
+    // memes
     if (msg.content.includes('YEP')) { YEP(msg) }
-    if (!msg.content.startsWith(process.env.PREFIX) || msg.author.bot) return;
-    if (!msg.guild) { msg.reply('You are not in a server'); return };
+    if (msg.content.includes('<@!777284907302912000>')) { BOT(msg) }
+
+    if (!msg.content.startsWith(process.env.PREFIX) || !msg.guild) return;
 
     const args = msg.content.slice(process.env.PREFIX.length).split(/ +/)
     const command = args.shift().toLowerCase()
