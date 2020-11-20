@@ -18,20 +18,16 @@ async function command(msg: Message, args: string[]) {
         msg.reply('That uiser does not exist')
         return;
     }
-    
-    if (player.playerInfo.playerName.includes('NO')) {
-        addUserToDatabase(msg, parsedUrl)
-    } else {
-        msg.reply('You do not have `NO` in your name ')
-    }
-}
 
-function parseScoreSaberLink(url: string) {
-    if (url.includes('scoresaber.com/u')) {
-        var playerUid = url.split('u/')
-        return playerUid[playerUid.length -1];
-    } else {
-        return false;
+    addUserToDatabase(msg, parsedUrl)
+
+    function parseScoreSaberLink(url: string) {
+        if (url.includes('scoresaber.com/u')) {
+            var playerUid = url.split('u/')
+            return playerUid[playerUid.length - 1];
+        } else {
+            return false;
+        }
     }
 }
 
