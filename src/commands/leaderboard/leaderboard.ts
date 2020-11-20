@@ -54,6 +54,7 @@ async function command(msg: Message, args: string[]) {
         "description": leaderboardMsg,
         "color": randColor()
     }))
+    msg.channel.stopTyping(true)
 }
 
 export default command
