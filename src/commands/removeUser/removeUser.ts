@@ -17,17 +17,17 @@ function command(msg: Message, args: string[]) {
         msg.reply('User not provided')
         return
     }
-    var userId = msg.mentions.users.first().id
-    firestore.collection('users').doc(userId).get().then(async doc => {
+    var user = msg.mentions.members.first()
+    firestore.collection('users').doc(user.id).get().then(async doc => {
         if (!doc.exists) {
             msg.reply('That user is not registered')
             return
         }
 
-        var statusMsg = await msg.channel.send(`Deleting User`)
-        await (await msg.guild.members.fetch()).get(userId).roles.remove(msg.guild.roles.cache.find(r => r.id == process.env.ROLE))
-        await firestore.collection('users').doc(userId).delete()
-        statusMsg.edit('Deleted.')
+        msg.channel.startTyping()
+        await (user.roles.remove(msg.guild.roles.cache.find(r => r.id == process.env.ROLE)))
+        await firestore.collection('users').doc(user.id).delete()
+        msg.channel.send('Deleted.')
     })
 }
 

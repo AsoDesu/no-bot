@@ -28,7 +28,7 @@ async function command(msg: Message, args: string[]) {
         return
     }
 
-    var discordMsg = await msg.channel.send('Generating Leaderboard')
+    msg.channel.startTyping()
     var leaderboard: leaderboardUser[] = []
 
     // bad code, very very bad code, see above statement
@@ -49,7 +49,7 @@ async function command(msg: Message, args: string[]) {
         leaderboardMsg = leaderboardMsg.concat(`#${leaderboard.indexOf(item) + 1} - \`${item.name}\` - ${formatNumber.numberWithCommas(item.pp)}pp \n`)
     })
     
-    discordMsg.edit("", new MessageEmbed({
+    msg.channel.send(new MessageEmbed({
         "title": "NO Clan Leaderboard",
         "description": leaderboardMsg,
         "color": randColor()
