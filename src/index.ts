@@ -52,6 +52,7 @@ client.on('message', async (msg: Discord.Message) => {
 
 client.on('ready', () => {
     console.log('Connected to discord Pog')
+    client.user.setActivity({ type: "PLAYING", name: "Beat Saber" })
 })
 
 client.login(process.env.TOKEN)
