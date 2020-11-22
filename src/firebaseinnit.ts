@@ -12,7 +12,18 @@ var firebaseConfig = {
     messagingSenderId: "635016930853",
     appId: "1:635016930853:web:90ad09cf3932db7ef341cc",
     measurementId: "G-1XFL79QRFB"
-}
+} 
+
+var firebaseConfigDev = {
+    apiKey: "AIzaSyA14FPA54Joh7DLD5IzP-otqzHPV9Arxqo",
+    authDomain: "no-clan-dev.firebaseapp.com",
+    databaseURL: "https://no-clan-dev.firebaseio.com",
+    projectId: "no-clan-dev",
+    storageBucket: "no-clan-dev.appspot.com",
+    messagingSenderId: "672258843290",
+    appId: "1:672258843290:web:d83ecf59b5203dd28ab523",
+    measurementId: "G-H09GE0E4M4"
+} 
 
 firebase.initializeApp(firebaseConfig);
 

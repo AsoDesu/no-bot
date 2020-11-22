@@ -8,6 +8,7 @@ import getUser from './commands/getUser/getUser'
 import addModUser from './commands/addModUser/addUser'
 import HELP from './commands/help/help'
 import leaderboard from './commands/leaderboard/leaderboard'
+import colour from './commands/leaderboard/colour'
 import dev from './commands/dev/dev'
 
 import YEP from './YEP'
@@ -43,6 +44,9 @@ client.on('message', async (msg: Discord.Message) => {
             return;
         case 'leaderboard':
             leaderboard(msg, args)
+            return;
+        case 'color':
+            colour(msg, args)
             return;
         case 'dev':
             dev(msg, args)
