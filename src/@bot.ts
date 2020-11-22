@@ -14,6 +14,10 @@ var responses = [
 ]
 
 function BOT(msg: Message) {
+    if (msg.content.includes('cute')) {
+        msg.channel.send('<:peepoblush:780156050536005634>')
+        return;
+    }
     msg.channel.send(responses[Math.floor(Math.random() * responses.length)])
 }
 
