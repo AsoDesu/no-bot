@@ -16,6 +16,7 @@ import BOT from './@bot'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
+    if (msg.member.roles.cache.has(process.env.BANROLE)) return
 
     // memes
     if (msg.content.toUpperCase().includes('YEP')) { YEP(msg) }
