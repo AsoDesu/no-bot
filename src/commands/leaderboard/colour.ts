@@ -3,7 +3,7 @@ import { Message } from "discord.js";
 async function colour(msg: Message, args: string[]) {
     var oneRole = await msg.guild.roles.fetch(process.env.ONEROLE)
     if (!msg.member.roles.cache.has(process.env.ONEROLE)) {
-        msg.reply('You can\t do that')
+        msg.reply('You can\'t do that')
         return;
     }
 
