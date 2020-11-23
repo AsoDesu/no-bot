@@ -32,6 +32,7 @@ function BOT(msg: Message) {
     }
     if (msg.content.includes('i\'m being held hostage')) {
         msg.channel.send(responses2[Math.floor(Math.random() * responses2.length)])
+        return
     }
     msg.channel.send(responses[Math.floor(Math.random() * responses.length)])
 }

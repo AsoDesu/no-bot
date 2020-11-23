@@ -6,10 +6,7 @@ var changes = {
     version: "0.1.22",
     title: "Minor Update",
     content: [
-        "Added Changelog whenever the bot restarts",
-        "Changed/Moved/Organised some files",
-        "Added another meme that storm wanted me to add",
-        "Probably more i forgot"
+        "Fixed a bug where the bot would reply twice when pinging with meme"
     ]
 }
 
