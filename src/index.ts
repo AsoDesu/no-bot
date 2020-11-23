@@ -11,8 +11,9 @@ import leaderboard from './commands/leaderboard/leaderboard'
 import colour from './commands/leaderboard/colour'
 import dev from './commands/dev/dev'
 
-import YEP from './YEP'
-import BOT from './@bot'
+import YEP from './modules/YEP'
+import BOT from './modules/@bot'
+import changelog from './modules/changelog'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
@@ -58,6 +59,7 @@ client.on('message', async (msg: Discord.Message) => {
 client.on('ready', () => {
     console.log('Connected to discord Pog')
     client.user.setActivity({ type: "PLAYING", name: "Beat Saber" })
+    changelog(client)
 })
 
 client.login(process.env.TOKEN)
