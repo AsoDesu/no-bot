@@ -25,6 +25,6 @@ var firebaseConfigDev = {
     measurementId: "G-H09GE0E4M4"
 } 
 
-firebase.initializeApp(firebaseConfigDev);
+firebase.initializeApp(firebaseConfig);
 
 firebase.auth().signInWithEmailAndPassword('no-bot@asodev.tk', process.env.PASSWORD)
