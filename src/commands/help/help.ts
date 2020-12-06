@@ -22,6 +22,14 @@ var helpEmbed = new MessageEmbed({
         {
             "name": ">leaderboard",
             "value": "Show's a leaderboard of all members of the NOPE clan (Global limit of 2 minutes)"
+        },
+        {
+            "name": ">link (twitch | birthday) {twitch/birthday}",
+            "value": "Links twitch or birthday to your nope clan profile"
+        },
+        {
+            "name": ">dev",
+            "value": "Shows the developer of this very dumb bot"
         }
     ]
 })

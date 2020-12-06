@@ -11,6 +11,8 @@ import leaderboard from './commands/leaderboard/leaderboard'
 import colour from './commands/leaderboard/colour'
 import dev from './commands/dev/dev'
 
+import link from './commands/link/linkTwitch'
+
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
 import changelog from './modules/changelog'
@@ -47,6 +49,9 @@ client.on('message', async (msg: Discord.Message) => {
         case 'leaderboard':
             leaderboard(msg, args)
             return;
+        case 'link':
+            link(msg, args)
+            return;
         case 'color':
             colour(msg, args)
             return;
@@ -54,11 +59,12 @@ client.on('message', async (msg: Discord.Message) => {
             dev(msg, args)
             return;
     }
+    msg.channel.send('Command not found')
 })
 
 client.on('ready', () => {
     console.log('Connected to discord Pog')
-    client.user.setActivity({ type: "PLAYING", name: "Beat Saber" })
+    client.user.setActivity({ type: "LISTENING", name: ">help" })
     changelog(client)
 })
 

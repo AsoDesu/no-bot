@@ -2,15 +2,16 @@ import { Client, MessageEmbed, TextChannel } from 'discord.js'
 
 import randColor from '../randomColor'
 
-var changes = {
-    version: "0.1.22",
-    title: "Minor Update",
-    content: [
-        "Fixed a bug where the bot would reply twice when pinging with meme"
-    ]
-}
+import firebase from 'firebase'
+import 'firebase/auth'
+import 'firebase/firestore'
+import '../firebaseinnit'
+
+var database = firebase.firestore()
 
 async function changeLog(client: Client) {
+    var changes = (await database.collection('info').doc('changelog').get()).data()
+
     var guild = await client.guilds.fetch(process.env.GUILDID)
     var channel = guild.channels.cache.get(process.env.CHANNELID)
     if (!((channel): channel is TextChannel => channel.type === 'text')(channel)) return;

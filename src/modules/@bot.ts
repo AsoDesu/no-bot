@@ -30,7 +30,7 @@ function BOT(msg: Message) {
         msg.channel.send('<:peepoblush:780156050536005634>')
         return;
     }
-    if (msg.content.includes('i\'m being held hostage')) {
+    if (msg.content.includes('hostage')) {
         msg.channel.send(responses2[Math.floor(Math.random() * responses2.length)])
         return
     }
