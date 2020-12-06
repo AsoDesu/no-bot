@@ -34,7 +34,7 @@ function command(msg: Message, args: string[]) {
         }
 
         var profileEmbed = {
-            "title": "Aso's Profile",
+            "title": `${msg.mentions.users.first().username}'s Profile`,
             "description": dataDescription,
             "color": 1,
             "fields": [
