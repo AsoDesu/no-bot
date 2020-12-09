@@ -33,6 +33,7 @@ function command(msg: Message, args: string[]) {
         if (data.twitch) { dataDescription = dataDescription.concat(`\n **Twitch**: https://twitch.tv/${data.twitch}`) } 
         if (data.birthday) { dataDescription = dataDescription.concat(`\n **Birthday**: ${data.birthday}`) }
         if (data.status) {dataDescription = dataDescription.concat(`\n **Status**: ${data.status}`)}
+        if (data.awards) { dataDescription = dataDescription.concat(`\n **Awards**: ${data.awards.join(', ')}`) }
         var color = randomColour()
         if (data.color) { color = data.color }
 
