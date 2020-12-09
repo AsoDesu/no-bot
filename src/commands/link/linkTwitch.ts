@@ -20,7 +20,7 @@ async function command(msg: Message, args: string[]) {
             break;
         case 'status':
             var parsedText = parseStatusText(msg.content)
-            if (!parsedText) { msg.channel.send('Must provide a status text'); return; }
+            if (!parsedText) { msg.channel.send('Must provide a status text, and it must be under 100 characters'); return; }
             formattedContent = parsedText
             break;
         default:
@@ -63,6 +63,9 @@ function veryPogColourValidation(colour: string) {
 function parseStatusText(content: string) {
     var splitText = content.split('status')
     if (splitText.length != 2) {
+        return false
+    }
+    if (splitText[1].trimStart().length > 100) {
         return false
     }
     return splitText[1].trimStart()
