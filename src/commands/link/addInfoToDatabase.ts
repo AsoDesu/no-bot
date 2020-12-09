@@ -12,7 +12,9 @@ var storage = firebase.storage()
 
 type addInfoArr = {
     twitch?: string,
-    birthday?: string
+    birthday?: string,
+    color?: string,
+    status?: string
 }
 
 async function addUser(uid: string, item: string, content: string) {
@@ -28,6 +30,12 @@ async function addUser(uid: string, item: string, content: string) {
             break;
         case 'birthday':
             addInfo.birthday = content
+            break;
+        case 'color':
+            addInfo.color = content
+            break;
+        case 'status':
+            addInfo.status = content
             break;
     }
 

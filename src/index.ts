@@ -59,7 +59,6 @@ client.on('message', async (msg: Discord.Message) => {
             dev(msg, args)
             return;
     }
-    msg.channel.send('Command not found')
 })
 
 client.on('ready', () => {
