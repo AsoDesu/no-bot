@@ -10,6 +10,7 @@ import HELP from './commands/help/help'
 import leaderboard from './commands/leaderboard/leaderboard'
 import colour from './commands/leaderboard/colour'
 import dev from './commands/dev/dev'
+import pfp from './commands/pfp'
 
 import link from './commands/link/linkTwitch'
 
@@ -58,11 +59,14 @@ client.on('message', async (msg: Discord.Message) => {
         case 'dev':
             dev(msg, args)
             return;
+        case 'pfp':
+            pfp(msg, args)
+            return;
     }
 })
 
 client.on('ready', () => {
-    console.log('Connected to discord Pog')
+    console.log('Connected to Discord')
     client.user.setActivity({ type: "LISTENING", name: ">help" })
     changelog(client)
 })
