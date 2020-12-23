@@ -25,11 +25,11 @@ type leaderboardUser = {
 
 async function command(msg: Message, args: string[], reqPage?: number) {
     // Test if the command was last run 2 minuites ago
-    var rateLimitTest = rateLimit(msg, 120000)
+    /*var rateLimitTest = rateLimit(msg, 120000)
     if (rateLimitTest.rateLimit && !msg.member.hasPermission('MANAGE_ROLES')) {
         msg.reply(`Hey not to fast, Try again in ${formatNumber.msToMandS(rateLimitTest.againIn)}s`)
         return
-    }
+    } */
 
     // Generate the array
     msg.channel.startTyping()
