@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import 'dotenv/config'
 
 async function give1(msg: Message, id: string) {
-    var user = msg.guild.member(id)
+    var user = await msg.guild.members.fetch(id)
     var oneRole = await msg.guild.roles.fetch(process.env.ONEROLE)
 
     if (!user.roles.cache.has(process.env.ONEROLE)) {
