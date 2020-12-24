@@ -10,7 +10,6 @@ async function give1(msg: Message, id: string) {
             user.roles.remove(oneRole)
         })
         user.roles.add(oneRole)
-        user.send('You got #1 on the NO clan leaderboard!!')
     }
 }
 
