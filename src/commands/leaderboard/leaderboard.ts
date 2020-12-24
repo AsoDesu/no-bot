@@ -35,7 +35,7 @@ async function command(msg: Message, args: string[]) {
     msg.channel.startTyping()
 
     var page = 1
-    var leaderboard = (await createLeaderboardArray(page))
+    var leaderboard = (await createLeaderboardArray(page, msg))
     var sentMsg = await msg.channel.send(createEmbedFromLbArray(leaderboard, msg, page))
 
     // Stop typing if the message didn't
@@ -86,9 +86,6 @@ function createEmbedFromLbArray(leaderboard: leaderboardUser[], msg: Message, pa
         leaderboardMsg = leaderboardMsg.concat(`#${(newLb.indexOf(item)) + page * 10 - 10 + 1} - \`${item.name}\` - ${formatNumber.numberWithCommas(item.pp)}pp \n`)
     })
 
-    // Give the role to the #1 player
-    //giveRoleTo1(msg, leaderboard[0].discord)
-
     // Send the message
     return new MessageEmbed({
         "title": "NO Clan Leaderboard",
@@ -105,7 +102,7 @@ function getItems(leaderboard: leaderboardUser[], page: number) {
 }
 
 // Function to generate the leaderboard array
-async function createLeaderboardArray(page: number) {
+async function createLeaderboardArray(page: number, msg: Message) {
     var leaderboard: leaderboardUser[] = []
     var userCollection = (await db.collection('users').get()).docs
     for (const doc of userCollection) {
@@ -117,6 +114,9 @@ async function createLeaderboardArray(page: number) {
     leaderboard = leaderboard.sort(function (a, b) {
         return b.pp - a.pp
     })
+
+    // Give the role to the #1 player
+    giveRoleTo1(msg, leaderboard[0].discord)
 
     return leaderboard
 }
