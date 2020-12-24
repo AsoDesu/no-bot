@@ -7,7 +7,7 @@ import '../../firebaseinnit'
 
 const client = tmi.client({
     identity: {
-      username: "asobot_",
+      username: "dumb_bot1",
       password: process.env.TMITOKEN
     }
 })
