@@ -65,7 +65,7 @@ async function command(msg: Message, args: string[]) {
 
             return;
             // If the reaction is next page, and they are not on the last page
-        } else if (reaction.emoji.name == '➡️' && !(page == leaderboard.length)) {
+        } else if (reaction.emoji.name == '➡️' && !(page == Math.ceil(leaderboard.length / 10))) {
             page = page + 1
             sentMsg.edit(createEmbedFromLbArray(leaderboard, msg, page))
 
