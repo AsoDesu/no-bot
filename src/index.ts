@@ -12,11 +12,10 @@ import colour from './commands/leaderboard/colour'
 import dev from './commands/dev/dev'
 import pfp from './commands/pfp'
 import link from './commands/link/linkTwitch'
+import addMod from './commands/addMod/addMod'
 
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
-import changelog from './modules/changelog'
-import './modules/twitch/twitch'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
@@ -62,13 +61,15 @@ client.on('message', async (msg: Discord.Message) => {
         case 'pfp':
             pfp(msg, args)
             return;
+        case 'addmod':
+            addMod(msg, args)
+            return;
     }
 })
 
 client.on('ready', () => {
     console.log('Connected to Discord')
     client.user.setActivity({ type: "LISTENING", name: ">help" })
-    //changelog(client)
 })
 
 client.login(process.env.TOKEN)
