@@ -24,11 +24,11 @@ async function command(msg: Message, args: string[]) {
         "color": randColour(),
         "fields": [
             { "name": "GitHub", "value": `[GitHub](${args[0]})`, "inline": true },
-            { "name": "Download", "value": `[Releases](${repo.releases_url})`, "inline": true }
+            { "name": "Download", "value": `[Releases](${repo.svn_url}/releases)`, "inline": true }
         ],
         "footer": {
             "text": `${repo.owner.login}`,
-            "url": `${repo.owner.avatar_url}`
+            "icon_url": `${repo.owner.avatar_url}`
         }
     }
 
