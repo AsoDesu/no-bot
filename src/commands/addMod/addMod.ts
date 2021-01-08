@@ -25,7 +25,11 @@ async function command(msg: Message, args: string[]) {
         "fields": [
             { "name": "GitHub", "value": `[GitHub](${args[0]})`, "inline": true },
             { "name": "Download", "value": `[Releases](${repo.releases_url})`, "inline": true }
-        ]
+        ],
+        "footer": {
+            "text": `${repo.owner.login}`,
+            "url": `${repo.owner.avatar_url}`
+        }
     }
 
     var modchannel = msg.client.channels.cache.get(process.env.MODCHANNEL)
