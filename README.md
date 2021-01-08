@@ -19,5 +19,5 @@ No
 ## What are the commands?
 - add {scoresaber} - Adds a user to the Member role and to the database
 - user {user} - Gets a given users scoresaber
-- remove - Removes yourself from the Member role and database
+- link { twitch | status | colour } {value}
 - help - Shows help menu
