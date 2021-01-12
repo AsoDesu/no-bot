@@ -16,16 +16,20 @@ import addMod from './commands/addMod/addMod'
 
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
+import vc from './modules/vc'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
+    if (msg.content == 'devvcj' && !msg.guild && (msg.author.id == '580425653325791272')) { vc.join(client); return }
+    if (msg.content == 'devvcd' && !msg.guild && (msg.author.id == '580425653325791272')) { vc.leave(client); return }
+    if (!msg.guild) { return; }
     if (msg.member.roles.cache.has(process.env.BANROLE)) return
 
     // memes
     if (msg.content.toUpperCase().includes('YEP')) { YEP(msg) }
     if (msg.content.includes('777284907302912000')) { BOT(msg) }
 
-    if (!msg.content.startsWith(process.env.PREFIX) || !msg.guild) return;
+    if (!msg.content.startsWith(process.env.PREFIX)) return;
 
     const args = msg.content.slice(process.env.PREFIX.length).split(/ +/)
     const command = args.shift().toLowerCase()
