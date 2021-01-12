@@ -17,11 +17,15 @@ import addMod from './commands/addMod/addMod'
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
 import vc from './modules/vc'
+import thoughts from './modules/purgatory'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
+
     if (msg.content == 'devvcj' && !msg.guild && (msg.author.id == '580425653325791272')) { vc.join(client); return }
     if (msg.content == 'devvcd' && !msg.guild && (msg.author.id == '580425653325791272')) { vc.leave(client); return }
+    if (msg.content.startsWith('*') && !msg.guild && (msg.author.id == '580425653325791272')) { thoughts(client, msg.content.replace('*', '')); return }
+
     if (!msg.guild) { return; }
     if (msg.member.roles.cache.has(process.env.BANROLE)) return
 
