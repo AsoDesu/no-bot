@@ -13,6 +13,7 @@ import dev from './commands/dev/dev'
 import pfp from './commands/pfp'
 import link from './commands/link/linkTwitch'
 import addMod from './commands/addMod/addMod'
+import scuffed from './commands/scuffed'
 
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
@@ -32,6 +33,7 @@ client.on('message', async (msg: Discord.Message) => {
     // memes
     if (msg.content.toUpperCase().includes('YEP')) { YEP(msg) }
     if (msg.content.includes('777284907302912000')) { BOT(msg) }
+    if (msg.content.includes('never')) { never(msg)}
 
     if (!msg.content.startsWith(process.env.PREFIX)) return;
 
@@ -72,6 +74,9 @@ client.on('message', async (msg: Discord.Message) => {
         case 'addmod':
             addMod(msg, args)
             return;
+        case 'scuffed':
+            scuffed(msg, args)
+            return;
     }
 })
 
@@ -85,6 +90,7 @@ client.login(process.env.TOKEN)
 // Express stuff
 
 import Express from 'express'
+import never from './modules/never'
 const app = Express()
 
 app.get('/ping', (req, res) => {
