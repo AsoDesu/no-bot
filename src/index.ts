@@ -13,7 +13,7 @@ import dev from './commands/dev/dev'
 import pfp from './commands/pfp'
 import link from './commands/link/linkTwitch'
 import addMod from './commands/addMod/addMod'
-import scuffed from './commands/scuffed'
+import scuffed from './commands/Scuffed'
 
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
