@@ -11,7 +11,7 @@ type inventory = { name: string, amount: number }
 
 async function command(msg: Message, args: string[]) {
     var items = shop.items
-    var itemName = msg.content.replace('=use ', '')
+    var itemName = msg.content.replace('>use ', '')
     var item = items.find(i => i.name.toLowerCase() == itemName.toLowerCase())
     if (!item) { msg.channel.send('That item doesn\'t exist'); return; }
 
