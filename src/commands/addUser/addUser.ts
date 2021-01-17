@@ -15,7 +15,7 @@ async function command(msg: Message, args: string[]) {
 
     var player = await scoresaber(parsedUrl)
     if (!player) {
-        msg.reply('That uiser does not exist')
+        msg.reply('That user does not exist')
         return;
     }
 

@@ -20,7 +20,7 @@ function command(msg: Message, args: string[]) {
     }
 
     firestore.collection('users').doc(userId).get().then(async doc => {
-        if (!doc.exists) {
+        if (!doc.exists || !doc.data().scoresaberId) {
             msg.reply('That user is not registered')
             return
         }
@@ -30,10 +30,10 @@ function command(msg: Message, args: string[]) {
 
         var dataDescription: string = `**ScoreSaber**: https://scoresaber.com/u/${data.scoresaberId}`
 
-        if (data.twitch) { dataDescription = dataDescription.concat(`\n **Twitch**: https://twitch.tv/${data.twitch}`) } 
-        if (data.birthday) { dataDescription = dataDescription.concat(`\n **Birthday**: ${data.birthday}`) }
-        if (data.status) {dataDescription = dataDescription.concat(`\n **Status**: ${data.status}`)}
-        if (data.awards) { dataDescription = dataDescription.concat(`\n **Awards**: ${data.awards.join(', ')}`) }
+        if (data.twitch) { dataDescription = dataDescription.concat(`\n**Twitch**: https://twitch.tv/${data.twitch}`) } 
+        if (data.birthday) { dataDescription = dataDescription.concat(`\n**Birthday**: ${data.birthday}`) }
+        if (data.status) {dataDescription = dataDescription.concat(`\n**Status**: ${data.status}`)}
+        if (data.awards) { dataDescription = dataDescription.concat(`\n**Awards**: ${data.awards.join(', ')}`) }
         var color = randomColour()
         if (data.color) { color = data.color }
 
@@ -51,6 +51,11 @@ function command(msg: Message, args: string[]) {
                 {
                     "name": "Country Rank",
                     "value": `#${scoreSaberUser.playerInfo.countryRank}`,
+                    "inline": true
+                },
+                {
+                    "name": "Balance",
+                    "value": `${doc.data().bal ? doc.data().bal : 0}pp`,
                     "inline": true
                 }
             ]

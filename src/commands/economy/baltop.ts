@@ -1,10 +1,6 @@
 import { Message, MessageEmbed, MessageReaction, User } from 'discord.js'
 import randColor from '../../randomColor'
-
-import getUserFromScoresaber from '../../scoresaberApiGrabber'
-import formatNumber from './numberFormater'
-import rateLimit from './rateLimit'
-import giveRoleTo1 from './1Role'
+import format from './numberFormatter'
 
 import firebase from 'firebase'
 import 'firebase/firestore'
@@ -15,22 +11,13 @@ import '../../firebaseinnit'
 var db = firebase.firestore()
 
 type leaderboardUser = {
-    scoresaber: string,
     name: string,
-    pp: number,
-    discord: string
+    xp: number,
 }
 
 // I have further proof that array's in JavaScript are nightmares that are only created to make the coder suffer eternally until they eventually give up and find some hacky solution
 
 async function command(msg: Message, args: string[]) {
-    // Test if the command was last run 2 minuites ago
-    var rateLimitTest = rateLimit(msg, 120000)
-    if (rateLimitTest.rateLimit && !msg.member.hasPermission('MANAGE_ROLES')) {
-        msg.reply(`Hey not to fast, Try again in ${formatNumber.msToMandS(rateLimitTest.againIn)}s`)
-        return
-    }
-
     // Generate the array
     msg.channel.startTyping()
 
@@ -83,12 +70,12 @@ function createEmbedFromLbArray(leaderboard: leaderboardUser[], msg: Message, pa
     // Add the array to the embed description
     var leaderboardMsg: string = ""
     newLb.forEach(item => {
-        leaderboardMsg = leaderboardMsg.concat(`#${(newLb.indexOf(item)) + page * 10 - 10 + 1} - \`${item.name}\` - ${formatNumber.numberWithCommas(item.pp)}pp \n`)
+        leaderboardMsg = leaderboardMsg.concat(`#${(newLb.indexOf(item)) + page * 10 - 10 + 1} - \`${item.name}\` - ${format.numberWithCommas(item.xp)}xp \n`)
     })
 
     // Send the message
     return new MessageEmbed({
-        "title": "NO Clan Leaderboard",
+        "title": "NO Clan Balance Leaderboard",
         "description": leaderboardMsg,
         "color": randColor(),
         "footer": {
@@ -104,22 +91,18 @@ function getItems(leaderboard: leaderboardUser[], page: number) {
 // Function to generate the leaderboard array
 async function createLeaderboardArray(page: number, msg: Message) {
     var leaderboard: leaderboardUser[] = []
-    var userCollection = (await db.collection('users').where('scoresaberId', '!=', null).get()).docs
+    var userCollection = (await db.collection('users').where('bal', '!=', null).get()).docs
     for (const doc of userCollection) {
         var userData = doc.data()
-        var ssData = await getUserFromScoresaber(userData.scoresaberId)
-        var user: leaderboardUser = { scoresaber: userData.scoresaberId, name: ssData.playerInfo.playerName, pp: ssData.playerInfo.pp, discord: doc.id }
+        var discordUserData = await msg.guild.members.fetch(doc.id)
+        var user: leaderboardUser = { name: discordUserData.user.username, xp: userData.bal }
         leaderboard.push(user)
     }
     leaderboard = leaderboard.sort(function (a, b) {
-        return b.pp - a.pp
+        return b.xp - a.xp
     })
-
-    // Give the role to the #1 player
-    giveRoleTo1(msg, leaderboard[0].discord)
 
     return leaderboard
 }
-// leaderboard.splice(((page * 10) - 10), 10)
 
 export default command

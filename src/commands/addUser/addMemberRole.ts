@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { Message } from 'discord.js'
 
 async function addRole(msg: Message) {
-    var role = msg.guild.roles.cache.find(r => r.id == process.env.ROLE)
+    var role = msg.guild.roles.cache.find(r => r.name == "Member")
 
     if (!role) {
         msg.reply('Role not found :(')

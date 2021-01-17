@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel } from 'discord.js'
+import { Channel, Message, MessageEmbed, TextChannel } from 'discord.js'
 import gh from './github-api/github'
 import './github-api/types'
 import randColour from '../../randomColor'

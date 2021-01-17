@@ -24,10 +24,10 @@ function addUser(msg: Message, scoresaber: string) {
 
     function addUserToFirestore() {
         userRef.get().then(doc => {
-            if (!doc.exists) {
+            if (!doc.exists || !doc.data().scoresaberId) {
                 userRef.set({
                     scoresaberId: scoresaber
-                })
+                }, {merge: true})
                 addRole(msg)
                 return;
             }
