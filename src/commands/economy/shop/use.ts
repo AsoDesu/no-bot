@@ -34,7 +34,7 @@ async function command(msg: Message, args: string[]) {
     db.collection('users').doc(msg.author.id).set({
         bal: bal,
         inv: inv
-    })
+    }, {merge: true})
     msg.channel.send(`You opened a ${item.name} and found ${xpGave}xp, Your balance is now ${bal}xp`)
 }
 
