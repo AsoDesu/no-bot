@@ -19,6 +19,7 @@ async function command(msg: Message, args: string[]) {
         return;
     } else {
         bal += parseFloat(uncollectedbal.toFixed(2))
+        cache.resetxp(msg.author.id)
         msg.channel.send(`You collected **${parseFloat(uncollectedbal.toFixed(2))}**xp, your balance is now **${bal}**xp`)
     }
 

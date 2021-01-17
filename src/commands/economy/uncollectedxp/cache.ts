@@ -16,7 +16,7 @@ function addUncollectedXp(id :string, amount: number) {
     }
 }
 
-function resetxp(id :string, amount: number) {
+function resetxp(id :string) {
     var user = uncollectedxp.find(u => u.userid == id)
     if (user) { 
         uncollectedxp[uncollectedxp.findIndex(u => u.userid == id)]. amount = 0
