@@ -55,7 +55,7 @@ function command(msg: Message, args: string[]) {
                 },
                 {
                     "name": "Balance",
-                    "value": `${doc.data().bal ? doc.data().bal : 0}pp`,
+                    "value": `${doc.data().bal ? doc.data().bal : 0}xp`,
                     "inline": true
                 }
             ]
