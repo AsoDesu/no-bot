@@ -77,6 +77,7 @@ client.on('message', async (msg: Discord.Message) => {
         case 'buy': shop.buycmd(msg, args); return;
         case 'inv': shop.invcmd(msg, args); return;
         case 'use': shop.usecmd(msg, args); return;
+        case 'resetxp232': modxp.resetXp(msg, args); return;
     }
     alises(command, msg, args)
     // memes

@@ -63,6 +63,26 @@ async function setxp(msg: Message, args: string[]) {
     msg.channel.send(`Set **${msg.mentions.users.first().username}**\'s xp to **${args[1]}**xp, their balance is now **${bal}**xp`)
 }
 
+async function resetxp(msg: Message, args: string[]) {
+    if (!(msg.author.id == msg.guild.ownerID)) {
+        msg.channel.send('You can\'t do this')
+        return;
+    }
+
+    var data = (await db.collection('users').where('bal', '!=', null).get()).docs
+    var delValue = firebase.firestore.FieldValue.delete()
+    for (const doc of data) {
+        doc.ref.set({
+            bal: delValue,
+            level: delValue,
+            balLastRun: delValue,
+            inv: delValue
+        }, {merge: true})
+    }
+    msg.channel.send('Reset Economy')
+}
+
+
 
 // Gamble Xp
 async function togglegamble(msg: Message, args: string[]) {
@@ -105,5 +125,6 @@ export default {
     removeXp: removexp,
     setXp: setxp,
     toggleGamble: togglegamble,
-    setJackpot: setjackpot
+    setJackpot: setjackpot,
+    resetXp: resetxp
 }
