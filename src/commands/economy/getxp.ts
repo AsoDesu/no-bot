@@ -21,12 +21,13 @@ async function command(msg: Message, args: string[]) {
     }
 
     var balGive = Math.floor(Math.random() * 100)
+    currentBal += balGive
     await db.collection('users').doc(msg.author.id).set({
-        bal: currentBal += balGive,
+        bal: currentBal,
         balLastRun: msg.createdTimestamp
     }, {merge: true}).catch(() => { msg.channel.send('Something went wrong, please try again later') })
 
-    msg.channel.send(`You got ${balGive}xp, your balance is now ${currentBal += balGive}xp`)
+    msg.channel.send(`You got ${balGive}xp, your balance is now ${currentBal}xp`)
 }
 
 export default command
