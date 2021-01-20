@@ -88,7 +88,7 @@ client.on('message', async (msg: Discord.Message) => {
 
 client.on('ready', () => {
     console.log('Connected to Discord')
-    client.user.setActivity('Version 1.5.1')
+    client.user.setActivity('Version 1.5.2')
 })
 
 client.login(process.env.TOKEN)
