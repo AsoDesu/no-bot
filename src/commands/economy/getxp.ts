@@ -26,21 +26,7 @@ async function command(msg: Message, args: string[]) {
         balLastRun: msg.createdTimestamp
     }, {merge: true}).catch(() => { msg.channel.send('Something went wrong, please try again later') })
 
-    msg.channel.send(getMessage(balGive))
-}
-
-function getMessage(balGive: number) {
-    if (balGive < 10) {
-        return `You searched and search but only found **${balGive}**xp`
-    } else if (balGive < 30) {
-        return `You found a mini chest and found **${balGive}**xp`
-    } else if (balGive < 50) {
-        return `You found a large chest and found **${balGive}**xp`
-    } else if (balGive < 80) {
-        return `You found a house, inside was **${balGive}**xp`
-    } else if (balGive < 100) {
-        return `You found the rarest chest and gained **${balGive}**xp`
-    }
+    msg.channel.send(`You got ${balGive}xp, your balance is now ${currentBal += balGive}xp`)
 }
 
 export default command
