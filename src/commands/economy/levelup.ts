@@ -19,13 +19,15 @@ async function command(msg: Message, args: string[]) {
         level: upToLevel
     }, { merge: true })
 
-    if (upToLevel <= 5) {
+    if (upToLevel >= 2) {
+        msg.member.roles.add(msg.guild.roles.cache.find(role => role.name == 'Level 2'))
+    } else if (upToLevel >= 5) {
         msg.member.roles.add(msg.guild.roles.cache.find(role => role.name == 'Level 5'))
-    } else if (upToLevel <= 10) {
+    } else if (upToLevel >= 10) {
         msg.member.roles.add(msg.guild.roles.cache.find(role => role.name == 'Level 10'))
-    } else if (upToLevel <= 15) {
+    } else if (upToLevel >= 15) {
         msg.member.roles.add(msg.guild.roles.cache.find(role => role.name == 'Level 15'))
-    } else if (upToLevel <= 20) {
+    } else if (upToLevel >= 20) {
         msg.member.roles.add(msg.guild.roles.cache.find(role => role.name == 'Level 20'))
     } else if (upToLevel >= 30) {
         msg.member.roles.add(msg.guild.roles.cache.find(role => role.name == 'Level 30+'))

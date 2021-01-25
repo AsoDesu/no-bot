@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { EmbedFieldData, Message, MessageEmbed } from "discord.js";
 
 import firebase, { auth } from 'firebase'
 import 'firebase/auth'
@@ -12,13 +12,7 @@ import randomColour from '../../randomColor'
 var firestore = firebase.firestore()
 
 function command(msg: Message, args: string[]) {
-    var userId: string;
-    if (msg.mentions.users.size == 0) {
-        userId = msg.author.id
-    } else {
-        userId = msg.mentions.users.first().id
-    }
-
+    var userId: string = (msg.mentions.users.size == 0) ? msg.author.id : msg.mentions.users.first().id
     firestore.collection('users').doc(userId).get().then(async doc => {
         if (!doc.exists || !doc.data().scoresaberId) {
             msg.reply('That user is not registered')
@@ -37,7 +31,6 @@ function command(msg: Message, args: string[]) {
         var color = randomColour()
         if (data.color) { color = data.color }
 
-
         var profileEmbed = {
             "title": `${(await msg.guild.members.fetch(userId)).user.username}'s Profile`,
             "description": dataDescription,
@@ -55,8 +48,12 @@ function command(msg: Message, args: string[]) {
                 },
                 {
                     "name": "Balance",
-                    "value": `${doc.data().bal ? doc.data().bal : 0}xp`,
+                    "value": `${data.bal ? data.bal : 0}xp`,
                     "inline": true
+                },
+                {
+                    "name": "Level",
+                    "value": `${data.level ? data.level : 1}`
                 }
             ]
         }

@@ -28,9 +28,10 @@ async function command(msg: Message, args: string[]) {
 
     bal -= balWagered
 
-    var balGive = Math.floor(Math.random() * 2)
+    var balGive = Math.floor(Math.random() * 3)
     switch (balGive) {
         case 0:
+        case 1:
             msg.channel.send(new MessageEmbed({
                 "title": "You Lost",
                 "description": `-${balWagered} Points \n\nYour balance is now ${bal}`,
@@ -38,7 +39,7 @@ async function command(msg: Message, args: string[]) {
             }))
             jackpotAmount += balWagered
             break;
-        case 1:
+        case 2:
             stage2()
             break;
         default:
@@ -69,6 +70,7 @@ async function command(msg: Message, args: string[]) {
                 "description": `+${jackpotAmount} Points \n\nYour balance is now ${bal}`,
                 "color": 1107977
             }))
+            jackpotAmount = 0
         } else {
             bal += balWagered * 2
             msg.channel.send(new MessageEmbed({

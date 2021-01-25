@@ -15,6 +15,7 @@ import link from './commands/link/linkTwitch'
 import addMod from './commands/addMod/addMod'
 import scuffed from './commands/Scuffed'
 import alises from './commands/alises'
+import rawuserdata from './commands/raw/rawUserData'
 
 // Economy
 import getxp from './commands/economy/getxp'
@@ -32,6 +33,8 @@ import BOT from './modules/@bot'
 import vc from './modules/vc'
 import thoughts from './modules/purgatory'
 import never from './modules/never'
+import userLeave from './modules/userLeave'
+import userJoin from './modules/userJoin'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
@@ -44,7 +47,7 @@ client.on('message', async (msg: Discord.Message) => {
     if (msg.member.roles.cache.find(r => r.name == 'dumb-bot-ban')) return
     collectCache.addxp(msg.author.id, 0.5)
 
-    //if (!msg.content.startsWith(process.env.PREFIX)) return;
+    if (!msg.content.startsWith(process.env.PREFIX)) {checkForMemes(msg); return;}
 
     const args = msg.content.toLowerCase().slice(process.env.PREFIX.length).split(/ +/)
     const command = args.shift().toLowerCase()
@@ -78,18 +81,26 @@ client.on('message', async (msg: Discord.Message) => {
         case 'inv': shop.invcmd(msg, args); return;
         case 'use': shop.usecmd(msg, args); return;
         case 'resetxp232': modxp.resetXp(msg, args); return;
+        case 'rawuserdata': rawuserdata(msg, args); return;
     }
     alises(command, msg, args)
-    // memes
-    if (msg.content.toUpperCase().includes('YEP')) { YEP(msg) }
-    if (msg.content.includes('777284907302912000')) { BOT(msg) }
-    if (msg.content.includes('never')) { never(msg) }
 })
+
+function checkForMemes( msg: Discord.Message) {
+    // memes
+    if (msg.content.toUpperCase().includes('YEP')) { YEP(msg); return }
+    if (msg.content.includes('777284907302912000')) { BOT(msg); return; }
+    if (msg.content.includes('never')) { never(msg); return; }
+}
 
 client.on('ready', () => {
     console.log('Connected to Discord')
-    client.user.setActivity('Version 1.5.3')
+    client.user.setActivity('Version 1.5.4')
 })
+
+client.on('guildMemberAdd', userJoin)
+
+client.on('guildMemberRemove', userLeave)
 
 client.login(process.env.TOKEN)
 
