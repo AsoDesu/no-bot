@@ -25,6 +25,13 @@ var responses2 = [
     "I cound't find any enabled video skills, take a look at the help section in your Alexa app"
 ]
 
+var responses3 = [
+    "D:",
+    "):",
+    "<:sad:777529892836605983>",
+    "<:blank:777534628432969748>"
+]
+
 function BOT(msg: Message) {
     if (msg.content.includes('cute')) {
         msg.channel.send('<:peepoblush:780156050536005634>')
@@ -32,6 +39,10 @@ function BOT(msg: Message) {
     }
     if (msg.content.includes('hostage')) {
         msg.channel.send(responses2[Math.floor(Math.random() * responses2.length)])
+        return
+    }
+    if (msg.content.includes('dumb')) {
+        msg.channel.send(responses3[Math.floor(Math.random() * responses3.length)])
         return
     }
     msg.channel.send(responses[Math.floor(Math.random() * responses.length)])

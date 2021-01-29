@@ -28,6 +28,7 @@ import collect from './commands/economy/uncollectedxp/collect'
 import collectCache from './commands/economy/uncollectedxp/cache'
 import shop from './commands/economy/shop/shop'
 
+// Moduels
 import YEP from './modules/YEP'
 import BOT from './modules/@bot'
 import vc from './modules/vc'
@@ -35,6 +36,7 @@ import thoughts from './modules/purgatory'
 import never from './modules/never'
 import userLeave from './modules/userLeave'
 import userJoin from './modules/userJoin'
+import shortener from './modules/url-shortener/url'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
@@ -74,7 +76,7 @@ client.on('message', async (msg: Discord.Message) => {
         case 'removexp': modxp.removeXp(msg, args); return
         case 'setxp': modxp.setXp(msg, args); return
         case 'togglegamble': modxp.toggleGamble(msg, args); return
-        case 'setjackpot': modxp.setJackpot(msg, args)
+        case 'setjackpot': modxp.setJackpot(msg, args); return;
         case 'collect': collect(msg, args); return
         case 'shop': shop.shopcmd(msg, args); return;
         case 'buy': shop.buycmd(msg, args); return;
@@ -82,7 +84,11 @@ client.on('message', async (msg: Discord.Message) => {
         case 'use': shop.usecmd(msg, args); return;
         case 'resetxp232': modxp.resetXp(msg, args); return;
         case 'rawuserdata': rawuserdata(msg, args); return;
+        case 'shorten': shortener.create(msg, args); return;
+        case 'geturl': shortener.get(msg) ; return;
+        case 'delurl': shortener.del(msg); return;
     }
+    // case '': ; return;
     alises(command, msg, args)
 })
 
@@ -109,12 +115,14 @@ client.login(process.env.TOKEN)
 import Express from 'express'
 const app = Express()
 
-app.get('/ping', (req, res) => {
-    res.send('Online')
-})
+app.use(Express.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-    res.send('hello ;)')
+    res.send('Aso was ere!')
+})
+
+app.get('/:shorturl', (req, res) => {
+    shortener.red(req, res);
 })
 
 app.listen(process.env.PORT)
