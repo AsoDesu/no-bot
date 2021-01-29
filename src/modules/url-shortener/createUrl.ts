@@ -15,7 +15,9 @@ var restrictedUrls = [
     "discord"
 ]
 
-async function command(msg: Message, args: string[]) {
+async function command(msg: Message) {
+    const args = msg.content.slice(process.env.PREFIX.length).split(/ +/)
+    args.shift()
     if (!(args.length >= 1)) {
         msg.reply("Usage >shorten (long url) [(short url)]")
         return;

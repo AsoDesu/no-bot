@@ -84,7 +84,7 @@ client.on('message', async (msg: Discord.Message) => {
         case 'use': shop.usecmd(msg, args); return;
         case 'resetxp232': modxp.resetXp(msg, args); return;
         case 'rawuserdata': rawuserdata(msg, args); return;
-        case 'shorten': shortener.create(msg, args); return;
+        case 'shorten': shortener.create(msg); return;
         case 'geturl': shortener.get(msg) ; return;
         case 'delurl': shortener.del(msg); return;
     }
@@ -101,7 +101,7 @@ function checkForMemes( msg: Discord.Message) {
 
 client.on('ready', () => {
     console.log('Connected to Discord')
-    client.user.setActivity('Version 1.6.1')
+    client.user.setActivity('Version 1.6.2')
 })
 
 client.on('guildMemberAdd', userJoin)
