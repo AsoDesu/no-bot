@@ -47,7 +47,7 @@ async function command(msg: Message) {
         owner: msg.author.id,
         clicks: 0,
     }, {merge: true})
-    msg.channel.send(`Created a short url with the name ${shortUrl}, https://noclan.ml/${shortUrl}`)
+    msg.channel.send(`Created a short url with the name ${shortUrl}, https://i.noclan.ml/${shortUrl}`)
 }
 
 export default command
