@@ -2,7 +2,7 @@ import { Message, MessageEmbed, MessageReaction, User } from "discord.js";
 // Non-Printing Invisible Character "᲼" (not a space)
 
 var helpEmbed1 = new MessageEmbed({
-    "title": "Profile Commands (1/3)",
+    "title": "Profile Commands (1/4)",
     "footer": {
         "icon_url": "https://cdn.discordapp.com/avatars/580425653325791272/a_cb9cbe6eb02eb68508a3d6fde0211b69.png",
         "text": "Created by Aso#0001 <3"
@@ -28,7 +28,7 @@ var helpEmbed1 = new MessageEmbed({
 })
 
 var helpEmbed2 = new MessageEmbed({
-    "title": "Economy Commands (2/3)",
+    "title": "Economy Commands (2/4)",
     "footer": {
         "icon_url": "https://cdn.discordapp.com/avatars/580425653325791272/a_cb9cbe6eb02eb68508a3d6fde0211b69.png",
         "text": "Created by Aso#0001 <3"
@@ -78,7 +78,29 @@ var helpEmbed2 = new MessageEmbed({
 })
 
 var helpEmbed3 = new MessageEmbed({
-    "title": "Info Commands (3/3)",
+    "title": "Url Commands (3/4)",
+    "footer": {
+        "icon_url": "https://cdn.discordapp.com/avatars/580425653325791272/a_cb9cbe6eb02eb68508a3d6fde0211b69.png",
+        "text": "Created by Aso#0001 <3"
+    },
+    "fields": [
+        {
+            "name": ">shorten (full url) [(short url)]",
+            "value": "Shorten a url to https://noclan.ml/(shorturl), or leave shorturl blank to get a random key"
+        },
+        {
+            "name": ">geturl (short url)",
+            "value": "Get the clickks, full url, and owner of a given url",
+        },
+        {
+            "name": ">delurl (short url)",
+            "value": "Delete the given url, (only the owner of the url can do this)",
+        }
+    ]
+})
+
+var helpEmbed4 = new MessageEmbed({
+    "title": "Info Commands (4/4)",
     "footer": {
         "icon_url": "https://cdn.discordapp.com/avatars/580425653325791272/a_cb9cbe6eb02eb68508a3d6fde0211b69.png",
         "text": "Created by Aso#0001 <3"
@@ -121,7 +143,7 @@ async function command(msg: Message, args: string[]) {
 
             return;
             // If the reaction is next page, and they are not on the last page
-        } else if (reaction.emoji.name == '➡️' && !(page == 3)) {
+        } else if (reaction.emoji.name == '➡️' && !(page == 4)) {
             page = page + 1
             sentMsg.edit(getEmbed(page))
 
@@ -140,6 +162,8 @@ function getEmbed(page: number) {
             return helpEmbed2
         case 3:
             return helpEmbed3
+        case 4:
+            return helpEmbed4
     }
 }
 
