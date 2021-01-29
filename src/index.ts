@@ -101,7 +101,7 @@ function checkForMemes( msg: Discord.Message) {
 
 client.on('ready', () => {
     console.log('Connected to Discord')
-    client.user.setActivity('Version 1.6.0')
+    client.user.setActivity('Version 1.6.1')
 })
 
 client.on('guildMemberAdd', userJoin)
