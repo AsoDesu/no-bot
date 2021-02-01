@@ -49,11 +49,10 @@ client.on('message', async (msg: Discord.Message) => {
     if (msg.member.roles.cache.find(r => r.name == 'dumb-bot-ban')) return
     collectCache.addxp(msg.author.id, 0.5)
 
-    if (!msg.content.startsWith(process.env.PREFIX)) {checkForMemes(msg); return;}
+    if (!msg.content.startsWith(process.env.PREFIX)) { checkForMemes(msg); return; }
 
     const args = msg.content.toLowerCase().slice(process.env.PREFIX.length).split(/ +/)
     const command = args.shift().toLowerCase()
-
     switch (command) {
         case 'help': HELP(msg, args); return;
         case 'add': addUser(msg, args); return;
@@ -85,14 +84,14 @@ client.on('message', async (msg: Discord.Message) => {
         case 'resetxp232': modxp.resetXp(msg, args); return;
         case 'rawuserdata': rawuserdata(msg, args); return;
         case 'shorten': shortener.create(msg); return;
-        case 'geturl': shortener.get(msg) ; return;
+        case 'geturl': shortener.get(msg); return;
         case 'delurl': shortener.del(msg); return;
     }
     // case '': ; return;
     alises(command, msg, args)
 })
 
-function checkForMemes( msg: Discord.Message) {
+function checkForMemes(msg: Discord.Message) {
     // memes
     if (msg.content.toUpperCase().includes('YEP')) { YEP(msg); return }
     if (msg.content.includes('777284907302912000')) { BOT(msg); return; }
