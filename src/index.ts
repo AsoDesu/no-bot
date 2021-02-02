@@ -16,6 +16,7 @@ import addMod from './commands/addMod/addMod'
 import scuffed from './commands/Scuffed'
 import alises from './commands/alises'
 import rawuserdata from './commands/raw/rawUserData'
+import neko from './commands/neko'
 
 // Economy
 import getxp from './commands/economy/getxp'
@@ -86,6 +87,7 @@ client.on('message', async (msg: Discord.Message) => {
         case 'shorten': shortener.create(msg); return;
         case 'geturl': shortener.get(msg); return;
         case 'delurl': shortener.del(msg); return;
+        case 'neko': neko(msg, args); return;
     }
     // case '': ; return;
     alises(command, msg, args)
@@ -100,7 +102,7 @@ function checkForMemes(msg: Discord.Message) {
 
 client.on('ready', () => {
     console.log('Connected to Discord')
-    client.user.setActivity('Version 1.6.2')
+    client.user.setActivity('Version 1.6.3')
 })
 
 client.on('guildMemberAdd', userJoin)
