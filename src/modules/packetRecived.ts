@@ -17,7 +17,9 @@ async function reactAdd(d: any, client: Client) {
 
     if (packet.user_id == client.user.id) return;
 
-    var user: GuildMember = await client.guilds.cache.get(process.env.GUILDID).members.fetch(packet.user_id).catch(() => user = null)
+    var guild = client.guilds.cache.get(process.env.GUILDID)
+
+    var user: GuildMember = await guild.members.fetch(packet.user_id).catch(() => user = null)
     if (!user) return;
 
     var rrData = await db.collection('reactions').doc(packet.message_id).get()
@@ -26,6 +28,7 @@ async function reactAdd(d: any, client: Client) {
 
     if (user.roles.cache.get(reaction.role)) return;
     user.roles.add(reaction.role).catch(() => { log(`Failed to give user ${user.user.username}, a role.`, client, __filename) })
+    user.send(`Gave you the **${guild.roles.cache.get(reaction.role).name}** role.`)
     log(`Gave ${user.user.username} a role.`, client, __filename)
 }
 
@@ -33,8 +36,9 @@ async function reactRemove(d: any, client: Client) {
     var packet = (d as reatpacket).d
 
     if (packet.user_id == client.user.id) return;
+    var guild = client.guilds.cache.get(process.env.GUILDID)
 
-    var user: GuildMember = await client.guilds.cache.get(process.env.GUILDID).members.fetch(packet.user_id).catch(() => user = null)
+    var user: GuildMember = await guild.members.fetch(packet.user_id).catch(() => user = null)
     if (!user) return;
 
     var rrData = await db.collection('reactions').doc(packet.message_id).get()
@@ -43,6 +47,7 @@ async function reactRemove(d: any, client: Client) {
 
     if (!user.roles.cache.get(reaction.role)) return;
     user.roles.remove(reaction.role).catch(() => { log(`Failed to give user ${user.user.username}, a role.`, client, __filename) })
+    user.send(`Removed the **${guild.roles.cache.get(reaction.role).name}** role.`)
     log(`Removed role from ${user.user.username}.`, client, __filename)
 }
 
