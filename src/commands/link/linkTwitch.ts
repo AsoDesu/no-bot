@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 
 import addInfoToDB from './addInfoToDatabase'
+import log from '../../modules/botLog'
 
 async function command(msg: Message, args: string[]) {
     var formattedContent: string;
@@ -28,6 +29,7 @@ async function command(msg: Message, args: string[]) {
             return;
     }
     msg.channel.send(await addInfoToDB(msg.member.id, args[0], formattedContent))
+    log(`${msg.author.username} linked ${args[0]} to their profile`, msg.client, __filename)
 }
 
 function doPogTwitchFormatting(thing: string) {

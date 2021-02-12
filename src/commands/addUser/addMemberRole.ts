@@ -1,11 +1,14 @@
 import 'dotenv/config'
 import { Message } from 'discord.js'
 
+import log from '../../modules/botLog'
+
 async function addRole(msg: Message) {
     var role = msg.guild.roles.cache.find(r => r.name == "Member")
 
     if (!role) {
-        msg.reply('Role not found :(')
+        msg.reply('Error getting the member role.')
+        log(`${msg.author.username} added themselves.`, msg.client, __filename)
         return;
     }
 

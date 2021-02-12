@@ -7,6 +7,8 @@ import 'firebase/firestore'
 import '../../firebaseinnit'
 var db = firebase.firestore()
 
+import log from '../../modules/botLog'
+
 // If i had a leaderboard for how bad my own code is, this entire file is a very close Number 2
 // Number 1 of course being the leaderboard code
 // I am so sorry Dumb Bot has to run this
@@ -28,7 +30,7 @@ async function command(msg: Message, args: string[]) {
 
     bal -= balWagered
 
-    var balGive = Math.floor(Math.random() * 2)
+    var balGive = 1//Math.floor(Math.random() * 2)
     switch (balGive) {
         case 0:
             msg.channel.send(new MessageEmbed({
@@ -46,7 +48,7 @@ async function command(msg: Message, args: string[]) {
     }
 
     async function stage2() {
-        var balGive2 = Math.floor(Math.random() * 100)
+        var balGive2 = 1//Math.floor(Math.random() * 100)
 
         if (balGive2 > 50) {
             bal += balWagered * 3
@@ -63,13 +65,15 @@ async function command(msg: Message, args: string[]) {
                 "color": 1107977
             }))
         } else if (balGive2 == 1) {
-            bal += jackpotAmount
+            var jackpotGiven = getJackpotToGive(jackpotAmount, balWagered)
+            bal += jackpotGiven
             msg.channel.send(new MessageEmbed({
                 "title": "JACKPOT!!",
-                "description": `+${jackpotAmount} Points \n\nYour balance is now ${bal}`,
+                "description": `+${jackpotGiven} Points \n\nYour balance is now ${bal}`,
                 "color": 1107977
             }))
-            jackpotAmount = 0
+            jackpotAmount -= jackpotGiven
+            log(`${msg.author.username} won the jackpot. [Message](${msg.url})`, msg.client, __filename)
         } else {
             bal += balWagered * 2
             msg.channel.send(new MessageEmbed({
@@ -88,6 +92,14 @@ async function command(msg: Message, args: string[]) {
     db.collection('economy').doc('gamble').set({
         jackpotAmount: jackpotAmount
     }, { merge: true })
+
+    log(`${msg.author.username} used the casino, there balance is now ${bal}`, msg.client, __filename)
+}
+
+function getJackpotToGive(jackpot: number, wagered: number) {
+    var amount = (jackpot > wagered) ? Math.floor(wagered * (jackpot % wagered) + wagered) : Math.floor(jackpot)
+    if (amount > jackpot) amount = jackpot
+    return amount
 }
 
 async function infoEmbed(msg: Message, args: string[], userfData: firebase.firestore.DocumentSnapshot, gambleData: firebase.firestore.DocumentSnapshot) {

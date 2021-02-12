@@ -28,13 +28,13 @@ function command(msg: Message, args: string[]) {
         if (data.birthday) { dataDescription = dataDescription.concat(`\n**Birthday**: ${data.birthday}`) }
         if (data.status) {dataDescription = dataDescription.concat(`\n**Status**: ${data.status}`)}
         if (data.awards) { dataDescription = dataDescription.concat(`\n**Awards**: ${data.awards.join(', ')}`) }
-        var color = randomColour()
-        if (data.color) { color = data.color }
+        var colour = randomColour()
+        if (data.color) { colour = data.color }
 
         var profileEmbed = {
             "title": `${(await msg.guild.members.fetch(userId)).user.username}'s Profile`,
             "description": dataDescription,
-            "color": color,
+            "color": colour,
             "fields": [
                 {
                     "name": "Global Rank",

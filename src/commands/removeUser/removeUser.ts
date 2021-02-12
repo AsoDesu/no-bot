@@ -5,6 +5,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 import '../../firebaseinnit'
+import log from '../../modules/botLog'
 
 var firestore = firebase.firestore()
 
@@ -29,6 +30,7 @@ function command(msg: Message, args: string[]) {
         await firestore.collection('users').doc(user.id).delete()
         msg.channel.send('Deleted.')
         msg.channel.stopTyping(true)
+        log(`${msg.author.username} removed ${user.user.username} from the database`, msg.client, __filename)
     })
 }
 

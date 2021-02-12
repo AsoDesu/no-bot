@@ -5,6 +5,8 @@ import 'firebase/firestore'
 import '../../firebaseinnit'
 var db = firebase.firestore()
 
+import log from '../../modules/botLog'
+
 // Manage User Xp
 async function givexp(msg: Message, args: string[]) {
     if (!msg.member.hasPermission('MANAGE_GUILD')) {
@@ -23,6 +25,7 @@ async function givexp(msg: Message, args: string[]) {
         bal: bal
     }, { merge: true })
     msg.channel.send(`Gave **${args[1]}**xp to **${msg.mentions.users.first().username}**, their balance is now **${bal}**xp`)
+    log(`${msg.author.username} gave ${msg.mentions.users.first()} ${args[1]}xp`, msg.client, __filename)
 }
 
 async function removexp(msg: Message, args: string[]) {
@@ -42,6 +45,7 @@ async function removexp(msg: Message, args: string[]) {
         bal: bal
     }, { merge: true })
     msg.channel.send(`Removed **${args[1]}**xp from **${msg.mentions.users.first().username}**, their balance is now **${bal}**xp`)
+    log(`${msg.author.username} removed ${args[1]}xp from ${msg.mentions.users.first()}`, msg.client, __filename)
 }
 
 async function setxp(msg: Message, args: string[]) {
@@ -61,6 +65,7 @@ async function setxp(msg: Message, args: string[]) {
         bal: bal
     }, { merge: true })
     msg.channel.send(`Set **${msg.mentions.users.first().username}**\'s xp to **${args[1]}**xp, their balance is now **${bal}**xp`)
+    log(`${msg.author.username} set from ${msg.mentions.users.first()}'s xp to ${args[1]}`, msg.client, __filename)
 }
 
 async function resetxp(msg: Message, args: string[]) {
@@ -80,6 +85,7 @@ async function resetxp(msg: Message, args: string[]) {
         }, {merge: true})
     }
     msg.channel.send('Reset Economy')
+    log(`${msg.author.username} reset the economy`, msg.client, __filename)
 }
 
 
@@ -99,6 +105,7 @@ async function togglegamble(msg: Message, args: string[]) {
         open: currentState
     }, { merge: true })
     msg.channel.send(`${currentState ? 'Opened' : 'Closed'} The Casino`)
+    log(`${msg.author.username} ${(currentState) ? 'Opened': 'Closed'} the casino.`, msg.client, __filename)
 }
 
 async function setjackpot(msg: Message, args: string[]) {
@@ -118,6 +125,7 @@ async function setjackpot(msg: Message, args: string[]) {
         jackpotAmount: jackpot
     }, { merge: true })
     msg.channel.send(`Set the Jackpot Amount to to **${args[0]}**xp`)
+    log(`${msg.author.username} set the jackpot amount to ${args[0]}`, msg.client, __filename)
 }
 
 export default {

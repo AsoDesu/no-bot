@@ -7,6 +7,8 @@ import 'firebase/auth'
 import '../../../firebaseinnit'
 var db = firebase.firestore()
 
+import log from '../../../modules/botLog'
+
 type inventory = { name: string, amount: number }
 
 async function command(msg: Message, args: string[]) {
@@ -36,6 +38,7 @@ async function command(msg: Message, args: string[]) {
         inv: inv
     }, {merge: true})
     msg.channel.send(`You opened a ${item.name} and found ${xpGave}xp, Your balance is now ${bal}xp`)
+    log(`${msg.author.username} used ${item.name}`, msg.client, __filename)
 }
 
 export default command

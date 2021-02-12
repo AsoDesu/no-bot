@@ -1,5 +1,6 @@
 import { GuildMember, MessageEmbed, PartialGuildMember } from 'discord.js'
 import getOwnerIcon from './getOwnerIcon';
+import log from './botLog'
 
 function userJoin(member: GuildMember | PartialGuildMember) {
     if (!(member instanceof GuildMember)) return;
@@ -11,6 +12,8 @@ function userJoin(member: GuildMember | PartialGuildMember) {
             "iconURL": getOwnerIcon(member.guild)
         }
     }))
+
+    log(`${member.user.username} joined.`, member.client, __filename)
 }
 
 export default userJoin

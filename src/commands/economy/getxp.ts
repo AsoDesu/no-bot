@@ -6,6 +6,8 @@ import 'firebase/firestore'
 import '../../firebaseinnit'
 var db = firebase.firestore()
 
+import log from '../../modules/botLog'
+
 async function command(msg: Message, args: string[]) {
     var userData = await db.collection('users').doc(msg.author.id).get()
     var currentBal: number
@@ -28,6 +30,7 @@ async function command(msg: Message, args: string[]) {
     }, {merge: true}).catch(() => { msg.channel.send('Something went wrong, please try again later') })
 
     msg.channel.send(`You got ${balGive}xp, your balance is now ${currentBal}xp`)
+    log(`${msg.author.username} was given ${balGive}xp.`, msg.client, __filename)
 }
 
 export default command

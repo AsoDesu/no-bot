@@ -17,6 +17,8 @@ import scuffed from './commands/Scuffed'
 import alises from './commands/alises'
 import rawuserdata from './commands/raw/rawUserData'
 import neko from './commands/neko'
+import createRR from './commands/ReactionRoles/create'
+import removeRR from './commands/ReactionRoles/remove'
 
 // Economy
 import getxp from './commands/economy/getxp'
@@ -38,6 +40,10 @@ import never from './modules/never'
 import userLeave from './modules/userLeave'
 import userJoin from './modules/userJoin'
 import shortener from './modules/url-shortener/url'
+import packetRecived from './modules/packetRecived'
+import botLog from './modules/botLog'
+import lbCache from './commands/leaderboard/cache'
+import autoupdate from './modules/updateLeaderboardCache'
 
 client.on('message', async (msg: Discord.Message) => {
     if (msg.author.bot) return
@@ -88,6 +94,8 @@ client.on('message', async (msg: Discord.Message) => {
         case 'geturl': shortener.get(msg); return;
         case 'delurl': shortener.del(msg); return;
         case 'neko': neko(msg, args); return;
+        case 'createrr': createRR(msg, args); return
+        case 'removerr': removeRR(msg, args); return
     }
     // case '': ; return;
     alises(command, msg, args)
@@ -100,14 +108,26 @@ function checkForMemes(msg: Discord.Message) {
     if (msg.content.includes('never')) { never(msg); return; }
 }
 
+function getClient() {
+    return client
+}
+
 client.on('ready', () => {
     console.log('Connected to Discord')
+    botLog('Connected to discord', client, __filename)
     client.user.setActivity('Version 1.6.3')
+
+    lbCache.updateCache(client)
+
+    if (autoupdate.task) { autoupdate.stopCron() }
+    autoupdate.startCron()
 })
 
 client.on('guildMemberAdd', userJoin)
 
 client.on('guildMemberRemove', userLeave)
+
+client.on('raw', (d) => { packetRecived(d, client) })
 
 client.login(process.env.TOKEN)
 
@@ -127,3 +147,7 @@ app.get('/:shorturl', (req, res) => {
 })
 
 app.listen(process.env.PORT)
+
+export default {
+    getClient
+}

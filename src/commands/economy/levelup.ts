@@ -5,6 +5,8 @@ import 'firebase/firestore'
 import '../../firebaseinnit'
 var db = firebase.firestore()
 
+import log from '../../modules/botLog'
+
 async function command(msg: Message, args: string[]) {
     var userfData = await db.collection('users').doc(msg.author.id).get()
     if (!userfData.exists || !userfData.data().bal) { msg.channel.send('You do not have enough xp to level up, Do >play to get xp'); return; }
@@ -34,6 +36,7 @@ async function command(msg: Message, args: string[]) {
     }
 
     msg.channel.send(`You leveled up from level **${level}** to level **${upToLevel}**`)
+    log(`${msg.author.username} leveled up.`, msg.client, __filename)
 }
 
 export default command

@@ -23,8 +23,12 @@ var firebaseConfigDev = {
     messagingSenderId: "672258843290",
     appId: "1:672258843290:web:d83ecf59b5203dd28ab523",
     measurementId: "G-H09GE0E4M4"
-} 
+}
 
-firebase.initializeApp(firebaseConfig);
+if (process.env.DEV == '1') {
+    firebase.initializeApp(firebaseConfigDev);
+} else {
+    firebase.initializeApp(firebaseConfig);
+}
 
 firebase.auth().signInWithEmailAndPassword('no-bot@asodev.tk', process.env.PASSWORD)

@@ -1,16 +1,19 @@
 import { Message, MessageEmbed, MessageReaction, User } from 'discord.js'
 import randColor from '../../randomColor'
 
-import getUserFromScoresaber from '../../scoresaberApiGrabber'
 import formatNumber from './numberFormater'
 import rateLimit from './rateLimit'
-import giveRoleTo1 from './1Role'
+
+import give1Role from './1Role'
+
+import cache from './cache'
 
 import firebase from 'firebase'
 import 'firebase/firestore'
 import 'firebase/auth'
 
 import '../../firebaseinnit'
+import log from '../../modules/botLog'
 
 var db = firebase.firestore()
 
@@ -28,18 +31,23 @@ async function command(msg: Message, args: string[]) {
     var rateLimitTest = rateLimit(msg, 120000)
     if (rateLimitTest.rateLimit && !msg.member.hasPermission('MANAGE_ROLES')) {
         msg.reply(`Hey not to fast, Try again in ${formatNumber.msToMandS(rateLimitTest.againIn)}s`)
+        log(`${msg.author.username} was rate limited`, msg.client, __filename)
         return
     }
 
-    // Generate the array
-    msg.channel.startTyping()
+    var update = ((args[0] == 'update') && msg.member.hasPermission('MANAGE_MESSAGES'))
+    if (!update && args[0] == 'update') { msg.channel.send('Leaderboard updating is a large job, and has been limited to staff only.'); return; }
+    if (update) { msg.channel.startTyping() }
 
     var page = 1
-    var leaderboard = (await createLeaderboardArray(page, msg))
+    var leaderboard = (!update) ? cache.getCache() : await cache.updateCache(msg.client)
+    if (!leaderboard) { msg.channel.send(`The leaderboard has not been updated yet. Please try again later. Current Status: ${cache.getCacheStatus().status}`); return }
+
+    await give1Role(msg, leaderboard[0].discord).catch(() => { log(`Error giving #1 role`, msg.client, __filename) })
+
     var sentMsg = await msg.channel.send(createEmbedFromLbArray(leaderboard, msg, page))
 
-    // Stop typing if the message didn't
-    msg.channel.stopTyping(true)
+    if (update) { msg.channel.stopTyping() }
     sentMsg.react('⬅️')
     sentMsg.react('➡️')
 
@@ -100,26 +108,5 @@ function createEmbedFromLbArray(leaderboard: leaderboardUser[], msg: Message, pa
 function getItems(leaderboard: leaderboardUser[], page: number) {
     return leaderboard.splice(((page * 10) - 10), 10)
 }
-
-// Function to generate the leaderboard array
-async function createLeaderboardArray(page: number, msg: Message) {
-    var leaderboard: leaderboardUser[] = []
-    var userCollection = (await db.collection('users').where('scoresaberId', '!=', null).get()).docs
-    for (const doc of userCollection) {
-        var userData = doc.data()
-        var ssData = await getUserFromScoresaber(userData.scoresaberId)
-        var user: leaderboardUser = { scoresaber: userData.scoresaberId, name: ssData.playerInfo.playerName, pp: ssData.playerInfo.pp, discord: doc.id }
-        leaderboard.push(user)
-    }
-    leaderboard = leaderboard.sort(function (a, b) {
-        return b.pp - a.pp
-    })
-
-    // Give the role to the #1 player
-    giveRoleTo1(msg, leaderboard[0].discord)
-
-    return leaderboard
-}
-// leaderboard.splice(((page * 10) - 10), 10)
 
 export default command
