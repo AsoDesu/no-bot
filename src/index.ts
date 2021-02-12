@@ -32,7 +32,6 @@ import collectCache from './commands/economy/uncollectedxp/cache'
 import shop from './commands/economy/shop/shop'
 
 // Moduels
-import YEP from './modules/YEP'
 import BOT from './modules/@bot'
 import vc from './modules/vc'
 import thoughts from './modules/purgatory'
@@ -103,7 +102,6 @@ client.on('message', async (msg: Discord.Message) => {
 
 function checkForMemes(msg: Discord.Message) {
     // memes
-    if (msg.content.toUpperCase().includes('YEP')) { YEP(msg); return }
     if (msg.content.includes('777284907302912000')) { BOT(msg); return; }
     if (msg.content.includes('never')) { never(msg); return; }
 }

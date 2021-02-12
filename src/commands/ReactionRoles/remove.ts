@@ -30,7 +30,7 @@ async function command(msg: Message, args: string[]) {
     } else {
         var emote: string;
         if (args[1].includes('<')) {
-            var clientEmote = msg.guild.emojis.cache.get(args[1].split(':')[1].replace('>', ''))
+            var clientEmote = msg.guild.emojis.cache.get(args[1].split(':')[1].replace('>', '').replace('<', ''))
             if (!clientEmote) {
                 msg.channel.send('I don\'t have access to that emote.')
                 return;
