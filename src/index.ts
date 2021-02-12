@@ -115,7 +115,7 @@ function getClient() {
 client.on('ready', () => {
     console.log('Connected to Discord')
     botLog('Connected to discord', client, __filename)
-    client.user.setActivity('Version 1.7.0')
+    client.user.setActivity('Version 1.7.1')
 
     lbCache.updateCache(client)
 
