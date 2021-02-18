@@ -30,7 +30,7 @@ async function command(msg: Message, args: string[]) {
 
     bal -= balWagered
 
-    var balGive = 1//Math.floor(Math.random() * 2)
+    var balGive = Math.floor(Math.random() * 2)
     switch (balGive) {
         case 0:
             msg.channel.send(new MessageEmbed({
@@ -48,7 +48,7 @@ async function command(msg: Message, args: string[]) {
     }
 
     async function stage2() {
-        var balGive2 = 1//Math.floor(Math.random() * 100)
+        var balGive2 = Math.floor(Math.random() * 100)
 
         if (balGive2 > 50) {
             bal += balWagered * 3
