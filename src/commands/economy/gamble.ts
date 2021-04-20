@@ -26,7 +26,7 @@ async function command(msg: Message, args: string[]) {
     var balWagered = parseInt(args[0])
     if (args[0] == 'info' || isNaN(balWagered)) { infoEmbed(msg, args, userfData, gambleData); return }
 
-    if (bal < balWagered || !(balWagered > 0)) { msg.channel.send('You can\'t wager that much'); return; }
+    if (bal < balWagered || !(balWagered > 0) || (balWagered > 1)) { msg.channel.send('You can\'t wager that much'); return; }
 
     bal -= balWagered
 
