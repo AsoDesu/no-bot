@@ -52,7 +52,7 @@ function command(msg: Message, args: string[]) {
 				color: colour,
 				fields: await generateFields(data),
 				thumbnail: {
-					url: msg.mentions.users.first().avatarURL(),
+					url: msg.mentions.users.size != 0 ? msg.mentions.users.first().avatarURL() : msg.author.avatarURL(),
 				},
 			};
 
