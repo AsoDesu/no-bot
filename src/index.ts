@@ -22,14 +22,14 @@ import ecoCache from "./modules/EconomyCache";
 function GetCommandsInDir(dir: string) {
 	fs.readdirSync(dir, { withFileTypes: true, encoding: "utf-8" }).forEach((file) => {
 		if (file.isDirectory()) {
-			GetCommandsInDir(dir + "\\" + file.name);
+			GetCommandsInDir(dir + "/" + file.name);
 			return;
 		}
-		require(`${dir}\\${file.name}`);
+		require(`${dir}/${file.name}`);
 	});
 }
 
-GetCommandsInDir(__dirname + "\\commands\\");
+GetCommandsInDir(__dirname + "/commands/");
 
 client.on("message", async (msg: Discord.Message) => {
 	if (msg.author.bot) return;
