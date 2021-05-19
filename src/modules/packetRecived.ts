@@ -23,7 +23,7 @@ async function reactAdd(d: any, client: Client) {
 
 	if (packet.user_id == client.user.id) return;
 
-	var guild = client.guilds.cache.get(process.env.GUILDID);
+	var guild = client.guilds.cache.get(packet.guild_id);
 
 	var user: GuildMember = await guild.members.fetch(packet.user_id).catch(() => (user = null));
 	if (!user) return;
@@ -44,7 +44,7 @@ async function reactRemove(d: any, client: Client) {
 	var packet = (d as reatpacket).d;
 
 	if (packet.user_id == client.user.id) return;
-	var guild = client.guilds.cache.get(process.env.GUILDID);
+	var guild = client.guilds.cache.get(packet.guild_id);
 
 	var user: GuildMember = await guild.members.fetch(packet.user_id).catch(() => (user = null));
 	if (!user) return;
