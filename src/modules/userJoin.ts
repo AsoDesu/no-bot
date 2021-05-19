@@ -28,7 +28,7 @@ async function userJoin(member: GuildMember | PartialGuildMember) {
 	member.send(
 		new MessageEmbed({
 			title: joinmsg.title,
-			description: joinmsg.msg,
+			description: joinmsg.msg.replace("\\n", "\n"),
 			footer: {
 				text: "Created by Aso#0001 <3",
 				iconURL: `https://scoresaber.com/imports/images/usr-avatars/76561198272266872.jpg`,
