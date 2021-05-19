@@ -25,10 +25,7 @@ function GetCommandsInDir(dir: string) {
 			GetCommandsInDir(dir + "\\" + file.name);
 			return;
 		}
-		if (!file.name.endsWith(".ts") || file.name.startsWith("#")) {
-			return;
-		}
-		import(`${dir}\\${file.name}`);
+		require(`${dir}\\${file.name}`);
 	});
 }
 
