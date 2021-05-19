@@ -4,10 +4,12 @@ import path from "path";
 import randomEmbedColor from "../randomColor";
 import index from "../index";
 
-process.on("unhandledRejection", (reason: Error) => {
-	if (!reason) return;
-	log(reason.stack, index.getClient(), "botLog.js");
-});
+function ready() {
+	process.on("unhandledRejection", (reason: Error) => {
+		if (!reason) return;
+		log(reason.stack, index.getClient(), "botLog.js");
+	});
+}
 
 function log(x: string, client: Client, caller: string) {
 	var channel: TextChannel = client.guilds.cache.get(process.env.GUILDID).channels.cache.get(process.env.LOGCHANNEL) as TextChannel;
@@ -30,4 +32,7 @@ function log(x: string, client: Client, caller: string) {
 	);
 }
 
-export default log;
+export default {
+	log,
+	ready,
+};
