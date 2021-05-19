@@ -33,8 +33,8 @@ async function reactAdd(d: any, client: Client) {
 	var reaction = (rrData.data().emotes as reactionArray[]).find((e) => e.emote == (packet.emoji.id ? packet.emoji.id : packet.emoji.name));
 
 	if (user.roles.cache.get(reaction.role)) return;
-	user.roles.add(reaction.role).catch(() => {
-		log.log(`Failed to give user ${user.user.username}, a role.`, client, __filename);
+	user.roles.add(reaction.role).catch((e) => {
+		log.log(`Failed to give user ${user.user.username}, a role. ${e}`, client, __filename);
 	});
 	user.send(`Gave you the **${guild.roles.cache.get(reaction.role).name}** role.`);
 	log.log(`Gave ${user.user.username} a role.`, client, __filename);
@@ -54,8 +54,8 @@ async function reactRemove(d: any, client: Client) {
 	var reaction = (rrData.data().emotes as reactionArray[]).find((e) => e.emote == (packet.emoji.id ? packet.emoji.id : packet.emoji.name));
 
 	if (!user.roles.cache.get(reaction.role)) return;
-	user.roles.remove(reaction.role).catch(() => {
-		log.log(`Failed to give user ${user.user.username}, a role.`, client, __filename);
+	user.roles.remove(reaction.role).catch((e) => {
+		log.log(`Failed to give user ${user.user.username}, a role. ${e}`, client, __filename);
 	});
 	user.send(`Removed the **${guild.roles.cache.get(reaction.role).name}** role.`);
 	log.log(`Removed role from ${user.user.username}.`, client, __filename);
