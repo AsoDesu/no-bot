@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { Client, User, MessageEmbed, TextChannel } from "discord.js";
 import index from "../index";
 
 import botLog from "./botLog";
@@ -7,6 +7,7 @@ import WebSocket from "ws";
 
 import firebase from "firebase";
 import "firebase/firestore";
+import got from "got";
 var db = firebase.firestore();
 
 type BeatKhanaSignupEvent = {
@@ -15,10 +16,27 @@ type BeatKhanaSignupEvent = {
 	userId: string;
 };
 
+type BeatKhanaUser = {
+	discordId: string;
+	ssId: string;
+	name: string;
+	twitchName: string;
+	avatar: string;
+	globalRank: number;
+	localRank: number;
+	country: string;
+	tourneyRank: number;
+	TR: number;
+	pronoun: string;
+	tournaments: string[];
+	badges: string[];
+};
+
 class BeatKhanaWebsocket {
 	public connection: WebSocket;
 	public tournamentGuildID: string;
 	public TournamentID: number;
+	public SignupsChannel: string;
 
 	public SetTournamentID(id: number) {
 		db.collection("guilds").doc(this.tournamentGuildID).set({ tournamentId: id }, { merge: true });
@@ -26,6 +44,18 @@ class BeatKhanaWebsocket {
 			this.connection.send(`{"setTournament":${id}}`);
 		}
 		this.TournamentID = id;
+	}
+
+	public SetSignupsChannel(id: string) {
+		var client: Client = index.getClient();
+		if (!client.channels.cache.has(id)) return false;
+
+		db.collection("guilds").doc(this.tournamentGuildID).set({ signupsChannel: id }, { merge: true });
+		this.SignupsChannel = id;
+
+		if (this.connection) {
+			RestartWebscoket();
+		}
 	}
 
 	public SetTournamentServer(id: string) {
@@ -44,7 +74,7 @@ class BeatKhanaWebsocket {
 
 		this.connection.once("open", () => {
 			this.connection.send(`{"setTournament":${this.TournamentID}}`);
-			console.log("Connected to BeatKhana.");
+			console.log("Connected to BeatKhana. Tournament ID: " + this.TournamentID);
 		});
 
 		this.connection.addEventListener("message", async (e) => {
@@ -60,12 +90,32 @@ class BeatKhanaWebsocket {
 					.then((user) => {
 						user.roles.add(guild.roles.cache.find((role) => role.name == "Participant"));
 						botLog.log(`${user.user.username} signed up and was given a role.`, client, __filename);
+						if (this.SignupsChannel) this.SendSignupEmbed(user.user, data);
 					})
 					.catch((e) => {
 						botLog.log(`User with id ${data.userId}, signed up but failed to be given a role.`, client, __filename);
 					});
 			}
 		});
+	}
+
+	private async SendSignupEmbed(user: User, data: BeatKhanaSignupEvent) {
+		var client: Client = index.getClient();
+
+		var BKUser = (await JSON.parse((await got(`https://beatkhana.com/api/user/${data.userId}`)).body)) as BeatKhanaUser;
+
+		(client.channels.cache.get(this.SignupsChannel) as TextChannel).send(
+			new MessageEmbed({
+				title: `${user.username} Signed up`,
+				description: `[ScoreSaber](https://scoresaber.com/u/${BKUser.ssId}) | [Twitch](https://twitch.tv/${BKUser.twitchName})\n**Global Rank**: #${BKUser.globalRank}\n**Regional Rank**: #${BKUser.localRank} :flag_${BKUser.country.toLowerCase()}:\n**Comment**: ${data.comment.slice(
+					0,
+					1000
+				)}`,
+				thumbnail: {
+					url: user.avatarURL({ dynamic: true }),
+				},
+			})
+		);
 	}
 }
 
@@ -79,6 +129,9 @@ async function StartWebsocket() {
 	BKWS.SetTournamentServer(doc.id);
 	if (doc.data().tournamentId) {
 		BKWS.SetTournamentID(doc.data().tournamentId);
+		if (doc.data().signupsChannel) {
+			BKWS.SetSignupsChannel(doc.data().signupsChannel);
+		}
 		BKWS.StartWebsocket();
 	}
 }
@@ -87,15 +140,7 @@ async function RestartWebscoket() {
 	if (BKWS.connection) {
 		BKWS.connection.close();
 	}
-	var docs = await db.collection("guilds").where("tournamentServer", "==", true).get();
-	if (docs.empty) return;
-
-	var doc = docs.docs[0];
-	BKWS.SetTournamentServer(doc.id);
-	if (doc.data().tournamentId) {
-		BKWS.SetTournamentID(doc.data().tournamentId);
-		BKWS.StartWebsocket();
-	}
+	StartWebsocket();
 }
 
 export default {
