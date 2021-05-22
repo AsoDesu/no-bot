@@ -99,7 +99,7 @@ class BeatKhanaWebsocket {
 		});
 	}
 
-	private async SendSignupEmbed(user: User, data: BeatKhanaSignupEvent) {
+	public async SendSignupEmbed(user: User, data: BeatKhanaSignupEvent) {
 		var client: Client = index.getClient();
 
 		var BKUser = (await JSON.parse((await got(`https://beatkhana.com/api/user/${data.userId}`)).body)) as BeatKhanaUser;
@@ -107,10 +107,7 @@ class BeatKhanaWebsocket {
 		(client.channels.cache.get(this.SignupsChannel) as TextChannel).send(
 			new MessageEmbed({
 				title: `${user.username} Signed up`,
-				description: `[ScoreSaber](https://scoresaber.com/u/${BKUser.ssId}) | [Twitch](https://twitch.tv/${BKUser.twitchName})\n**Global Rank**: #${BKUser.globalRank}\n**Regional Rank**: #${BKUser.localRank} :flag_${BKUser.country.toLowerCase()}:\n**Comment**: ${data.comment.slice(
-					0,
-					1000
-				)}`,
+				description: `[ScoreSaber](https://scoresaber.com/u/${BKUser.ssId}) | [Twitch](https://twitch.tv/${BKUser.twitchName})\n**Global Rank**: #${BKUser.globalRank}\n**Regional Rank**: #${BKUser.localRank} :flag_${BKUser.country.toLowerCase()}:\n**Comment**: ${data.comment}`,
 				thumbnail: {
 					url: user.avatarURL({ dynamic: true }),
 				},
