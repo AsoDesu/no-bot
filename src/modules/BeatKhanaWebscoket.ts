@@ -84,7 +84,9 @@ async function StartWebsocket() {
 }
 
 async function RestartWebscoket() {
-	BKWS.connection.close();
+	if (BKWS.connection) {
+		BKWS.connection.close();
+	}
 	var docs = await db.collection("guilds").where("tournamentServer", "==", true).get();
 	if (docs.empty) return;
 

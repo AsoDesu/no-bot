@@ -19,8 +19,12 @@ class SetTournamentID extends BaseCommand {
 			return;
 		}
 
-		db.collection("guilds").doc(msg.guild.id).set({ tournamentServer: true }, { merge: true });
-		BeatKhanaWebscoket.BKWS.SetTournamentID(parseInt(args[0]));
+		db.collection("guilds")
+			.doc(msg.guild.id)
+			.set({ tournamentServer: true }, { merge: true })
+			.then(() => {
+				BeatKhanaWebscoket.BKWS.SetTournamentID(parseInt(args[0]));
+			});
 		msg.channel.send("Set Tournament Id.");
 	}
 
