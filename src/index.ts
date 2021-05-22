@@ -18,6 +18,8 @@ import lbCache from "./modules/LeaderboardCache";
 import redirect from "./modules/url-shortener/redirect";
 import ecoCache from "./modules/EconomyCache";
 
+import BeatKhanaWebsocket from "./modules/BeatKhanaWebscoket";
+
 // Init Commands
 function GetCommandsInDir(dir: string) {
 	fs.readdirSync(dir, { withFileTypes: true, encoding: "utf-8" }).forEach((file) => {
@@ -80,6 +82,8 @@ client.on("ready", () => {
 		autoupdate.stopCron();
 	}
 	autoupdate.startCron();
+
+	BeatKhanaWebsocket.StartWebsocket();
 });
 
 client.on("guildMemberAdd", userJoin);
