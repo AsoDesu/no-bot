@@ -25,7 +25,7 @@ class SetSignupsChannel extends BaseCommand {
 	}
 	label = "setsignups";
 	hidden = true;
-	//whitelistedServers = ["809084684716867645"];
+	whitelistedServers = ["809084684716867645"];
 }
 
 commandManager.registerCommand(new SetSignupsChannel());
