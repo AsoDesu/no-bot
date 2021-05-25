@@ -77,6 +77,11 @@ class BeatKhanaWebsocket {
 			console.log("Connected to BeatKhana. Tournament ID: " + this.TournamentID);
 		});
 
+		this.connection.addEventListener("close", () => {
+			botLog.log(`Disconnected from BeatKhana.`, index.getClient(), __filename);
+			this.connection = null;
+		});
+
 		this.connection.addEventListener("message", async (e) => {
 			var msg = await JSON.parse(e.data);
 			if (msg.newParticipant) {
