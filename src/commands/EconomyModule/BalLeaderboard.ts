@@ -82,7 +82,7 @@ function createEmbedFromLbArray(leaderboard: leaderboardUser[], msg: Message, pa
 
 	// Send the message
 	return new MessageEmbed({
-		title: "NO Clan Balance Leaderboard",
+		title: "Balance Leaderboard",
 		description: leaderboardMsg,
 		color: randColor(),
 		footer: {

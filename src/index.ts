@@ -74,7 +74,7 @@ client.on("ready", () => {
 	console.log(`Initalized ${commandManager.commands.length} commands.`);
 	botLog.ready();
 	botLog.log("Connected to discord", client, __filename);
-	client.user.setActivity("Version 2.1.0");
+	client.user.setActivity("Version 2.5.0");
 
 	lbCache.updateCache(client);
 
