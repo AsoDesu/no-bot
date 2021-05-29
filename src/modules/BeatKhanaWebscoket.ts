@@ -8,6 +8,7 @@ import WebSocket from "ws";
 import firebase from "firebase";
 import "firebase/firestore";
 import got from "got";
+import delay from "./delay";
 var db = firebase.firestore();
 
 type BeatKhanaSignupEvent = {
@@ -75,10 +76,15 @@ class BeatKhanaWebsocket {
 		this.connection.once("open", () => {
 			this.connection.send(`{"setTournament":${this.TournamentID}}`);
 			console.log("Connected to BeatKhana. Tournament ID: " + this.TournamentID);
+			botLog.log("Connected to BeatKhana", index.getClient(), __filename);
 		});
 
-		this.connection.addEventListener("close", () => {
+		this.connection.addEventListener("close", async () => {
 			botLog.log(`Disconnected from BeatKhana.`, index.getClient(), __filename);
+
+			console.log("Disconnected from BeatKhana, connecting again in 5 seconds.");
+			this.Reconnect();
+
 			this.connection = null;
 		});
 
@@ -112,12 +118,23 @@ class BeatKhanaWebsocket {
 		(client.channels.cache.get(this.SignupsChannel) as TextChannel).send(
 			new MessageEmbed({
 				title: `${user.username} Signed up`,
-				description: `[ScoreSaber](https://scoresaber.com/u/${BKUser.ssId}) | [Twitch](https://twitch.tv/${BKUser.twitchName})\n**Global Rank**: #${BKUser.globalRank}\n**Regional Rank**: #${BKUser.localRank} :flag_${BKUser.country.toLowerCase()}:\n**Comment**: ${data.comment}`,
+				description: `[ScoreSaber](https://scoresaber.com/u/${BKUser.ssId}) | [Twitch](https://twitch.tv/${BKUser.twitchName})\n**Global Rank**: #${
+					BKUser.globalRank
+				}\n**Regional Rank**: #${BKUser.localRank} :flag_${BKUser.country.toLowerCase()}:\n**Comment**: ${data.comment}`,
 				thumbnail: {
 					url: user.avatarURL({ dynamic: true }),
 				},
 			})
 		);
+	}
+
+	private async Reconnect() {
+		await delay(5000);
+		this.StartWebsocket();
+		this.connection.once("error", () => {
+			console.log("Failed to connect, retrying in 5 seconds.");
+			this.Reconnect();
+		});
 	}
 }
 
@@ -140,7 +157,8 @@ async function StartWebsocket() {
 
 async function RestartWebscoket() {
 	if (BKWS.connection) {
-		BKWS.connection.close();
+		if (BKWS.connection.readyState == BKWS.connection.OPEN) BKWS.connection.close();
+		BKWS.connection = null;
 	}
 	StartWebsocket();
 }

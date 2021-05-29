@@ -101,8 +101,8 @@ async function createLeaderboardArray(page: number, msg: Message) {
 	var userCollection = (await db.collection("users").where("bal", "!=", null).get()).docs;
 	for (const doc of userCollection) {
 		var userData = doc.data();
-		var discordUserData = await msg.guild.members.fetch(doc.id);
-		var user: leaderboardUser = { name: discordUserData.user.username, xp: userData.bal };
+		var discordUserData = await msg.client.users.fetch(doc.id);
+		var user: leaderboardUser = { name: discordUserData.username, xp: userData.bal };
 		leaderboard.push(user);
 	}
 	leaderboard = leaderboard.sort(function (a, b) {
