@@ -93,7 +93,9 @@ class BeatKhanaWebsocket {
 			if (msg.newParticipant) {
 				if (!this.tournamentGuildID) return;
 				var data = msg.newParticipant as BeatKhanaSignupEvent;
-
+				
+				if (data.comment == "hide") return;
+				
 				var client = index.getClient();
 				var guild = client.guilds.cache.get(this.tournamentGuildID);
 				guild.members
